@@ -1,3 +1,4 @@
+#include "map/map2d.hpp"
 #include "network/defaults.hpp"
 #include "network/gameconnection.hpp"
 #include "network/gameconnectionfactory.hpp"
@@ -6,9 +7,9 @@
 using namespace Botventure;
 
 int main(int argc, char* argv[]){
-	int i = 6;
+	Map::Map2D map(10,10);
 	
-	Poco::Net::TCPServer server(new Network::GameConnectionFactory<Network::GameConnection>(i), Network::Defaults::Port);
+	Poco::Net::TCPServer server(new Network::GameConnectionFactory<Network::GameConnection>(map), Network::Defaults::Port);
 	server.start();
 	
 	std::string input;

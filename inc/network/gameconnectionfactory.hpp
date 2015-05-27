@@ -1,6 +1,7 @@
 #ifndef network_gameconnectionfactory_
 #define network_gameconnectionfactory_
 
+#include "map/map2d.hpp"
 #include "network/gameconnection.hpp"
 #include "Poco/Net/TCPServerConnection.h"
 #include "Poco/Net/TCPServerConnectionFactory.h"
@@ -12,14 +13,14 @@ template <class T>
 class GameConnectionFactory : public Poco::Net::TCPServerConnectionFactory
 {
 public:
-	GameConnectionFactory(int& i) : i(i){}
+	GameConnectionFactory(Map::Map2D& map) : map(map){}
 	~GameConnectionFactory(){}
 	Poco::Net::TCPServerConnection* createConnection(const Poco::Net::StreamSocket& socket)
 	{
-		return new T(socket, i);
+		return new T(socket, map);
 	}
 private:
-	int& i;
+	Map::Map2D& map;
 };
 
 }

@@ -6,7 +6,8 @@ message Header {
 	enum MessageType
 	{
 		NOOP = 0;
+		MAP = 1;
 	}
 	MessageType messageType = 1;
-	int32 messageSize = 2;
+	uint32 messageLength = 2;
 }

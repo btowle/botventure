@@ -8,7 +8,7 @@ LIBDIR=lib/
 SRCDIR=src/
 INCDIR=inc/
 
-SHAREDSRCS=
+SHAREDSRCS=map/map2d.cpp
 CLIENTSRCS=client.cpp
 CLIENTSRCS+=$(SHAREDSRCS)
 SERVERSRCS=server.cpp network/gameconnection.cpp
@@ -33,7 +33,7 @@ MSRCDIR=src/network/messages/
 MIFLAGS=-I=$(MSRCDIR)
 MLIBDIR=lib/network/messages/
 MCPPOUT=--cpp_out=$(MLIBDIR)
-MESSAGENAMES=header
+MESSAGENAMES=header map
 MESSAGES=$(addprefix $(MLIBDIR),$(addsuffix .pb.cc,$(MESSAGENAMES)))
 MESSAGEOBJECTS=$(MESSAGES:.pb.cc=.o)
 
@@ -58,7 +58,7 @@ $(MLIBDIR)%.pb.cc : $(MSRCDIR)%.proto |directories
 	$(MCC) $(MIFLAGS) $(MCPPOUT) $<
 
 directories:
-	mkdir -p bin lib/network/messages
+	mkdir -p bin lib/network/messages lib/map
 
 .PHONY:
 clean:
