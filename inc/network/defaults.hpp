@@ -1,3 +1,6 @@
+#ifndef network_defaults_
+#define network_defaults_
+
 #include "Poco/Foundation.h"
 
 namespace Botventure{
@@ -11,3 +14,5 @@ public:
 
 }
 }
+
+#endif

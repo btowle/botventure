@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package Botventure.Messages;
+
+message Header {
+	enum MessageType
+	{
+		NOOP = 0;
+	}
+	MessageType messageType = 1;
+	int32 messageSize = 2;
+}

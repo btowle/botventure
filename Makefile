@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-g -Wall -std=c++11
-LDFLAGS=-lPocoNet -lPocoFoundation
-IFLAGS=-I./inc
+LDFLAGS=-lPocoNet -lPocoFoundation -lprotobuf
+IFLAGS=-I./inc -I./lib/network
 
 BINDIR=bin/
 LIBDIR=lib/
@@ -17,7 +17,7 @@ SERVERSRCS+=$(SHAREDSRCS)
 CLIENTOBJS=$(addprefix $(LIBDIR),$(CLIENTSRCS:.cpp=.o))
 SERVEROBJS=$(addprefix $(LIBDIR),$(SERVERSRCS:.cpp=.o))
 
-SHAREDHEADERS=network/defaults.hpp
+SHAREDHEADERS=network/defaults.hpp network/gameconnectionfactory.hpp
 CHEADERS=
 CHEADERS+=$(SHAREDHEADERS)
 CLIENTHEADERS=$(addprefix $(INCDIR),$(CHEADERS))
@@ -28,13 +28,22 @@ SERVERHEADERS=$(addprefix $(INCDIR),$(SHEADERS))
 CLIENT=$(BINDIR)client
 SERVER=$(BINDIR)server
 
-all: $(CLIENT) $(SERVER)
+MCC=protoc
+MSRCDIR=src/network/messages/
+MIFLAGS=-I=$(MSRCDIR)
+MLIBDIR=lib/network/messages/
+MCPPOUT=--cpp_out=$(MLIBDIR)
+MESSAGENAMES=header
+MESSAGES=$(addprefix $(MLIBDIR),$(addsuffix .pb.cc,$(MESSAGENAMES)))
+MESSAGEOBJECTS=$(MESSAGES:.pb.cc=.o)
 
-$(CLIENT): $(CLIENTOBJS) $(CLIENTHEADERS) |directories
-	$(CC) $(CLIENTOBJS) -o $@ $(LDFLAGS)
+all: $(MESSAGES) $(MESAGEOBJECTS) $(CLIENT) $(SERVER)
 
-$(SERVER): $(SERVEROBJS) $(SERVERHEADERS) |directories
-	$(CC) $(SERVEROBJS) -o $@ $(LDFLAGS)
+$(CLIENT): $(CLIENTHEADERS) $(MESSAGEOBJECTS) $(CLIENTOBJS) |directories
+	$(CC) $(CLIENTOBJS) $(MESSAGEOBJECTS) -o $@ $(LDFLAGS)
+
+$(SERVER): $(SERVERHEADERS) $(MESSAGEOBJECTS) $(SERVEROBJS) |directories
+	$(CC) $(SERVEROBJS) $(MESSAGEOBJECTS) -o $@ $(LDFLAGS)
 
 $(LIBDIR)%.o : $(SRCDIR)%.cpp
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
@@ -42,8 +51,14 @@ $(LIBDIR)%.o : $(SRCDIR)%.cpp
 $(LIBDIR)%.o : $(SRCDIR)%.cpp $(INCDIR)%.hpp
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
+$(MLIBDIR)%.o : $(MLIBDIR)%.pb.cc $(MLIBDIR)%.pb.h
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+
+$(MLIBDIR)%.pb.cc : $(MSRCDIR)%.proto |directories
+	$(MCC) $(MIFLAGS) $(MCPPOUT) $<
+
 directories:
-	mkdir -p bin lib/network
+	mkdir -p bin lib/network/messages
 
 .PHONY:
 clean:
