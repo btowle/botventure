@@ -8,28 +8,44 @@ namespace Map{
 			nodes[i] = msg.nodes(i);
 		}
 	}
-	
-	int Map2D::Index(int x, int y){
+
+	Terrain& Map2D::GetNode(int index){
+		return nodes[index];
+	}
+
+	const Terrain& Map2D::GetNode(int index) const{
+		return nodes[index];
+	}
+
+	Terrain& Map2D::GetNode(int x, int y){
+		return GetNode(Index(x,y));
+	}
+
+	const Terrain& Map2D::GetNode(int x, int y) const{
+		return GetNode(Index(x,y));
+	}
+
+	int Map2D::Index(int x, int y) const{
 		return y*width + x;
 	}
 	
-	void Map2D::FillMessage(Messages::Map& message){
+	void Map2D::FillMessage(Messages::Map& message) const{
 		message.set_width(width);
 		message.set_height(height);
 		message.clear_nodes();
-		for(Messages::Map::NodeType n : nodes){
+		for(Terrain n : nodes){
 			message.add_nodes(n);
 		}
 	}
 	
-	void Map2D::FillMessage(Messages::Header& header, Messages::Map& message){
+	void Map2D::FillMessage(Messages::Header& header, Messages::Map& message) const{
 		FillMessage(message);
 		
 		header.set_messagetype(Messages::Header::MAP);
 		header.set_messagelength(message.ByteSize());
 	}
 	
-	bool Map2D::SendMap(Poco::Net::SocketStream& sstream){
+	bool Map2D::SendMap(Poco::Net::SocketStream& sstream) const{
 		FillMessage(header, mapMessage);
 		sstream << header.ByteSize();
 		if(!header.SerializeToOstream(&sstream)){

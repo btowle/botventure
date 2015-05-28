@@ -9,26 +9,33 @@
 namespace Botventure{
 namespace Map{
 
+typedef Messages::Map::NodeType Terrain;
+
 class Map2D{
 public:
 	Map2D(int width, int height) : width(width), height(height), nodes(width*height, Messages::Map::GROUND){}
 	explicit Map2D(const Messages::Map& msg);
 	~Map2D(){}
 	
-	int GetWidth() { return width; }
-	int GetHeight() { return height; }
-	int Index(int x, int y);
+	int GetWidth() const { return width; }
+	int GetHeight() const { return height; }
 	
-	void FillMessage(Messages::Map& message);
-	void FillMessage(Messages::Header& header, Messages::Map& message);
-	bool SendMap(Poco::Net::SocketStream& sstream);
+	Terrain& GetNode(int index);
+	const Terrain& GetNode(int index) const;
+	Terrain& GetNode(int x, int y);
+	const Terrain& GetNode(int x, int y) const;
+	int Index(int x, int y) const;
+
+	void FillMessage(Messages::Map& message) const;
+	void FillMessage(Messages::Header& header, Messages::Map& message) const;
+	bool SendMap(Poco::Net::SocketStream& sstream) const;
 private:
 	int width;
 	int height;
-	std::vector<Messages::Map::NodeType> nodes;
+	std::vector<Terrain> nodes;
 	
-	Messages::Header header;
-	Messages::Map mapMessage;
+	mutable Messages::Header header;
+	mutable Messages::Map mapMessage;
 };
 
 }
