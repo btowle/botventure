@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
 	
 	std::string input;
 	while(std::cin >> input){
-		if(input.compare("exit\n")){
+		if(input.compare("exit") == 0){
 			std::cout << "Shutting down server" << std::endl;
 			break;
 		}
