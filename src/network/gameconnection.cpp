@@ -1,6 +1,5 @@
 #include "network/gameconnection.hpp"
-#include "messages/header.pb.h"
-#include "messages/map.pb.h"
+#include "network/messages.hpp"
 #include <iostream>
 #include "Poco/Net/SocketStream.h"
 

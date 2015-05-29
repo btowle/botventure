@@ -41,8 +41,8 @@ namespace Map{
 	void Map2D::FillMessage(Messages::Header& header, Messages::Map& message) const{
 		FillMessage(message);
 		
-		header.set_messagetype(Messages::Header::MAP);
-		header.set_messagelength(message.ByteSize());
+		header.set_message_type(Messages::Header::MAP);
+		header.set_message_length(message.ByteSize());
 	}
 	
 	bool Map2D::SendMap(Poco::Net::SocketStream& sstream) const{

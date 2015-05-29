@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package Botventure.Messages;
+
+message Turn{
+  int32 turn_number = 1;
+}

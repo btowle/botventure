@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package Botventure.Messages;
+
+message ActionRequest {
+  enum ActionType
+  {
+    WAIT = 0;
+    MOVE = 1;
+    ATTACK = 2;
+  }
+}
+
+message ActionResponse {
+  enum ResultType
+  {
+    FAILURE = 0;
+    SUCCESS = 1;
+  }
+  ResultType result = 2;
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package Botventure.Messages;
+
+message Enemy {
+  int32 health = 1;
+  int32 x = 2;
+  int32 y = 3;
+}

@@ -6,8 +6,11 @@ message Header {
 	enum MessageType
 	{
 		NOOP = 0;
-		MAP = 1;
+    HANDSHAKE = 1;
+		MAP = 2;
+    SENSOR = 3;
+    ACTION = 4;
 	}
-	MessageType messageType = 1;
-	uint32 messageLength = 2;
+	MessageType message_type = 1;
+	uint32 message_length = 2;
 }

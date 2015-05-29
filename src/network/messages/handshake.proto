@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package Botventure.Messages;
+
+message Handshake {
+  enum Step{
+    SYN = 0;
+    ACK = 1;
+  }
+  Step step = 1;
+}

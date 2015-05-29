@@ -1,8 +1,7 @@
 #ifndef map_map2d_
 #define map_map2d_
 
-#include "messages/header.pb.h"
-#include "messages/map.pb.h"
+#include "network/messages.hpp"
 #include <vector>
 #include "Poco/Net/SocketStream.h"
 

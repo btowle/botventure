@@ -1,6 +1,5 @@
 #include "map/map2d.hpp"
-#include "messages/header.pb.h"
-#include "messages/map.pb.h"
+#include "network/messages.hpp"
 #include "network/defaults.hpp"
 #include <iostream>
 #include <stdlib.h>
@@ -27,9 +26,9 @@ int main(int argc, char* argv[]){
 		std::cerr << "did not receive header, exiting" << std::endl << std::flush;
 		exit(EXIT_FAILURE);
 	}
-	else if(header.messagetype() == Messages::Header::MAP) {
-		sstream.read(buffer, header.messagelength());
-		if(!mapMessage.ParseFromArray(buffer, header.messagelength())){
+	else if(header.message_type() == Messages::Header::MAP) {
+		sstream.read(buffer, header.message_length());
+		if(!mapMessage.ParseFromArray(buffer, header.message_length())){
 			std::cerr << "did not receive mapMessage, exiting" << std::endl << std::flush;
 			exit(EXIT_FAILURE);
 		}

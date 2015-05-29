@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package Botventure.Messages;
+
+message BotStatus {
+  enum SensorType
+  {
+    Internal = 0;
+    GPS = 1;
+  }
+  int32 health = 1;
+  repeated SensorType available_sensors = 2;
+}
