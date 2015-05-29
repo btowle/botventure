@@ -3,13 +3,17 @@
 #include "network/gameconnection.hpp"
 #include "network/gameconnectionfactory.hpp"
 #include <iostream>
+#include "Poco/Net/TCPServerParams.h"
 
 using namespace Botventure;
 
 int main(int argc, char* argv[]){
 	Map::Map2D map(10,10);
 	
-	Poco::Net::TCPServer server(new Network::GameConnectionFactory<Network::GameConnection>(map), Network::Defaults::Port);
+  Poco::Net::TCPServerParams* params = new Poco::Net::TCPServerParams();
+  params->setMaxThreads(1);
+
+	Poco::Net::TCPServer server(new Network::GameConnectionFactory<Network::GameConnection>(map), Network::Defaults::Port, params);
 	server.start();
 	
 	std::string input;
@@ -19,4 +23,5 @@ int main(int argc, char* argv[]){
 			break;
 		}
 	}
+  server.stop();
 }

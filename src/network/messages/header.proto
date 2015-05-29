@@ -5,11 +5,16 @@ package Botventure.Messages;
 message Header {
 	enum MessageType
 	{
-		NOOP = 0;
-    HANDSHAKE = 1;
-		MAP = 2;
-    SENSOR = 3;
-    ACTION = 4;
+		ERROR = 0;
+    ACTIONREQUEST = 1;
+    ACTIONRESPONSE = 2;
+    BOTSTATUS = 3;
+    ENEMY = 4;
+    HANDSHAKE = 5;
+		MAP = 6;
+    SENSORREQUEST = 7;
+    SENSORRESPONSE = 8;
+    TURN = 9;
 	}
 	MessageType message_type = 1;
 	uint32 message_length = 2;
