@@ -1,7 +1,7 @@
 #ifndef map_map2d_
 #define map_map2d_
 
-#include "network/messages.hpp"
+#include "../network/messages.hpp"
 #include <vector>
 #include "Poco/Net/SocketStream.h"
 

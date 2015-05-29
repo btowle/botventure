@@ -1,0 +1,2 @@
+#define Botventure_VERSION_MAJOR @Botventure_VERSION_MAJOR@
+#define Botventure_VERSION_MINOR @Botventure_VERSION_MINOR@

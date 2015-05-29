@@ -1,7 +1,7 @@
 #ifndef network_gameconnection_
 #define network_gameconnection_
 
-#include "map/map2d.hpp"
+#include "../map/map2d.hpp"
 #include "Poco/Net/TCPServer.h"
 #include "Poco/Net/TCPServerConnection.h"
 #include "Poco/Net/StreamSocket.h"

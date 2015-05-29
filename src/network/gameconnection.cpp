@@ -1,5 +1,5 @@
-#include "network/gameconnection.hpp"
-#include "network/messages.hpp"
+#include "gameconnection.hpp"
+#include "messages.hpp"
 #include <iostream>
 #include "Poco/Net/SocketStream.h"
 

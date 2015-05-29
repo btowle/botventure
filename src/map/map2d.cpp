@@ -1,4 +1,4 @@
-#include "map/map2d.hpp"
+#include "map2d.hpp"
 #include <iostream>
 namespace Botventure{
 namespace Map{

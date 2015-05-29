@@ -1,8 +1,8 @@
 #ifndef network_gameconnectionfactory_
 #define network_gameconnectionfactory_
 
-#include "map/map2d.hpp"
-#include "network/gameconnection.hpp"
+#include "../map/map2d.hpp"
+#include "gameconnection.hpp"
 #include "Poco/Net/TCPServerConnection.h"
 #include "Poco/Net/TCPServerConnectionFactory.h"
 

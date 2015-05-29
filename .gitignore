@@ -1,2 +1,11 @@
-lib/*
-bin/*
+*/bin/*
+*.a
+*.pb.h
+*.pb.cc
+
+#CMake
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
