@@ -15,7 +15,7 @@ public:
   MessageReader(Poco::Net::SocketStream& sstream) : sstream(sstream), buffer(256) {}
   ~MessageReader() {}
 
-  Messages::Header::MessageType GetNextMessage();
+  bool GetNextMessage();
   Messages::Header::MessageType CurrentMessageType() const;
   template <class T>
   const T& CurrentMessage() const{
@@ -32,13 +32,10 @@ private:
 
   Messages::ActionRequest actionRequest;
   Messages::ActionResponse actionResponse;
-  Messages::BotStatus botStatus;
-  Messages::Enemy enemy;
+  Messages::GameInfo gameInfo;
   Messages::Handshake handshake;
-  Messages::Map map;
   Messages::SensorRequest sensorRequest;
   Messages::SensorResponse sensorResponse;
-  Messages::Turn turn;
   ::google::protobuf::Message* currentMessage;
 };
 

@@ -2,6 +2,6 @@ syntax = "proto3";
 
 package Botventure.Messages;
 
-message Turn{
+message GameInfo{
   int32 turn_number = 1;
 }

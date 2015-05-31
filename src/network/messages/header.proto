@@ -1,5 +1,13 @@
 syntax = "proto3";
 
+import "action.proto";
+//import "botstatus.proto";
+//import "enemy.proto";
+import "game.proto";
+import "handshake.proto";
+//import "map.proto";
+import "sensor.proto";
+
 package Botventure.Messages;
 
 message Header {
@@ -8,14 +16,26 @@ message Header {
 		ERROR = 0;
     ACTIONREQUEST = 1;
     ACTIONRESPONSE = 2;
-    BOTSTATUS = 3;
-    ENEMY = 4;
-    HANDSHAKE = 5;
-		MAP = 6;
-    SENSORREQUEST = 7;
-    SENSORRESPONSE = 8;
-    TURN = 9;
+    //BOTSTATUS = 3;
+    //ENEMY = 4;
+    GAMEINFO = 5;
+    HANDSHAKE = 6;
+		//MAP = 7;
+    SENSORREQUEST = 8;
+    SENSORRESPONSE = 9;
 	}
 	MessageType message_type = 1;
-	uint32 message_length = 2;
+
+  oneof message_oneof {
+    ActionRequest action_request = 16;
+    ActionResponse action_response = 17;
+    //BotStatus bot_status = 18;
+    //Enemy enemy = 19;
+    GameInfo game_info = 20;
+    Handshake handshake = 21;
+    //Map map = 22;
+    SensorRequest sensor_request = 23;
+    SensorResponse sensor_response = 24;
+    string error_message = 25;
+  }
 }

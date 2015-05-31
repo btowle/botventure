@@ -28,33 +28,5 @@ namespace Map{
 	int Map2D::Index(int x, int y) const{
 		return y*width + x;
 	}
-	
-	void Map2D::FillMessage(Messages::Map& message) const{
-		message.set_width(width);
-		message.set_height(height);
-		message.clear_nodes();
-		for(Terrain n : nodes){
-			message.add_nodes(n);
-		}
-	}
-	
-	void Map2D::FillMessage(Messages::Header& header, Messages::Map& message) const{
-		FillMessage(message);
-		
-		header.set_message_type(Messages::Header::MAP);
-		header.set_message_length(message.ByteSize());
-	}
-	
-	bool Map2D::SendMap(Poco::Net::SocketStream& sstream) const{
-		FillMessage(header, mapMessage);
-		sstream << header.ByteSize();
-		if(!header.SerializeToOstream(&sstream)){
-			return false;
-		}
-		if(!mapMessage.SerializeToOstream(&sstream)){
-			return false;	
-		}
-		return true;
-	}
 }
 }

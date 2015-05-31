@@ -6,6 +6,7 @@ message Handshake {
   enum Step{
     SYN = 0;
     ACK = 1;
+    NEWGAME = 2;
   }
   Step step = 1;
 }

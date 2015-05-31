@@ -1,5 +1,6 @@
 add_subdirectory(messages)
 add_library(gameconnection gameconnection.cpp gameconnectionfactory.hpp)
 target_link_libraries(gameconnection map2d)
-add_library(network messagereader.cpp messages.hpp defaults.hpp)
+add_library(network messagereader.cpp messagewriter.cpp messages.hpp defaults.hpp)
+add_dependencies(network messages)
 target_compile_features(network PUBLIC cxx_range_for)

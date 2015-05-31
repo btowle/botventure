@@ -18,6 +18,7 @@ public:
 	
 	int GetWidth() const { return width; }
 	int GetHeight() const { return height; }
+  const std::vector<Terrain>& GetNodes() const { return nodes; }
 	
 	Terrain& GetNode(int index);
 	const Terrain& GetNode(int index) const;
@@ -25,9 +26,6 @@ public:
 	const Terrain& GetNode(int x, int y) const;
 	int Index(int x, int y) const;
 
-	void FillMessage(Messages::Map& message) const;
-	void FillMessage(Messages::Header& header, Messages::Map& message) const;
-	bool SendMap(Poco::Net::SocketStream& sstream) const;
 private:
 	int width;
 	int height;
