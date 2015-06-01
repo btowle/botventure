@@ -1,4 +1,3 @@
-#include "map/map2d.hpp"
 #include "network/messagereader.hpp"
 #include "network/messagewriter.hpp"
 #include "network/messages.hpp"

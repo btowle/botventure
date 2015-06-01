@@ -1,7 +1,7 @@
 #include "map2d.hpp"
 #include <iostream>
 namespace Botventure{
-namespace Map{
+namespace World{
 	
 	Map2D::Map2D(const Messages::Map& msg) : width(msg.width()), height(msg.height()), nodes(width*height, Messages::Map::UNKNOWN){
 		for(int i=0; i<msg.nodes_size(); ++i){

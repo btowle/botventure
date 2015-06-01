@@ -46,11 +46,11 @@ namespace Network{
     SendMessage(header);
   }
 
-  void MessageWriter::SendSensorResponse(const Map::Map2D& m){
+  void MessageWriter::SendSensorResponse(const World::Map2D& m){
     header.set_message_type(Messages::Header::SENSORRESPONSE);
     map.set_width(m.GetWidth());
     map.set_height(m.GetHeight());
-    for(Map::Terrain n : m.GetNodes()){
+    for(World::Terrain n : m.GetNodes()){
       map.add_nodes(n);
     }
     sensorResponse.mutable_map()->CopyFrom(map);
@@ -59,12 +59,12 @@ namespace Network{
     SendMessage(header);
   }
 /*
-  void MessageWriter::SendMap(const Map::Map2D& map){
+  void MessageWriter::SendMap(const World::Map2D& map){
     header.set_message_type(Messages::Header::MAP);
     Messages::Map mapMessage;
     mapMessage.set_width(map.GetWidth());
     mapMessage.set_height(map.GetHeight());
-    for(Map::Terrain n : map.GetNodes()){
+    for(World::Terrain n : map.GetNodes()){
       mapMessage.add_nodes(n);
     }
     header.mutable_map()->CopyFrom(mapMessage);

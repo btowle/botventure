@@ -6,7 +6,7 @@
 #include "Poco/Net/SocketStream.h"
 
 namespace Botventure{
-namespace Map{
+namespace World{
 
 typedef Messages::Map::NodeType Terrain;
 

@@ -1,13 +1,13 @@
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${CMAKE_BINARY_DIR}/src/network/messages)
 
-add_subdirectory(map)
+add_subdirectory(world)
 add_subdirectory(network)
 
 set(SERVER_INCLUDES server.cpp)
 set(CLIENT_INCLUDES client.cpp)
 set(EXTERNAL_LIBRARIES PocoNet PocoFoundation protobuf)
-set(LIBRARIES map2d messages gameconnection network)
+set(LIBRARIES world messages gameconnection network)
 
 add_executable(botventure-client ${CLIENT_INCLUDES})
 add_dependencies(botventure-client ${LIBRARIES})

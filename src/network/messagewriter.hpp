@@ -2,7 +2,7 @@
 #define network_messagewriter_
 
 #include "messages.hpp"
-#include "../map/map2d.hpp"
+#include "../world/map2d.hpp"
 #include "Poco/Net/SocketStream.h"
 
 namespace Botventure{
@@ -15,13 +15,13 @@ public:
   ~MessageWriter() {}
 
   void SendMessage(const Messages::Header& msg) const;
-  //void SendMap(const Map::Map2D& map);
+  //void SendMap(const World::Map2D& map);
   void SendActionRequest();
   void SendActionResponse();
   void SendGameInfo(int turnNumber);
   void SendHandshake(Messages::Handshake::Step step);
   void SendSensorRequest(Messages::BotStatus::SensorType sensor);
-  void SendSensorResponse(const Map::Map2D& map);
+  void SendSensorResponse(const World::Map2D& map);
   //void SendSensorResponse(const Bot bot);
 
 private:

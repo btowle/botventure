@@ -1,4 +1,4 @@
-#include "map/map2d.hpp"
+#include "world/map2d.hpp"
 #include "network/defaults.hpp"
 #include "network/gameconnection.hpp"
 #include "network/gameconnectionfactory.hpp"
@@ -8,7 +8,7 @@
 using namespace Botventure;
 
 int main(int argc, char* argv[]){
-	Map::Map2D map(10,10);
+	World::Map2D map(10,10);
 	
   Poco::Net::TCPServerParams* params = new Poco::Net::TCPServerParams();
   params->setMaxThreads(1);
