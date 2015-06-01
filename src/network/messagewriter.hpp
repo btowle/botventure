@@ -18,18 +18,21 @@ public:
   //void SendMap(const Map::Map2D& map);
   void SendActionRequest();
   void SendActionResponse();
-  void SendGameInfo();
+  void SendGameInfo(int turnNumber);
   void SendHandshake(Messages::Handshake::Step step);
-  void SendSensorRequest();
-  void SendSensorResponse();
+  void SendSensorRequest(Messages::BotStatus::SensorType sensor);
+  void SendSensorResponse(const Map::Map2D& map);
+  //void SendSensorResponse(const Bot bot);
 
 private:
   Poco::Net::SocketStream& sstream;
   Messages::Header header;
   Messages::ActionRequest actionRequest;
   Messages::ActionResponse actionResponse;
+  Messages::BotStatus botStatus;
   Messages::GameInfo gameInfo;
   Messages::Handshake handshake;
+  Messages::Map map;
   Messages::SensorRequest sensorRequest;
   Messages::SensorResponse sensorResponse;
 };

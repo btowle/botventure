@@ -5,7 +5,7 @@ package Botventure.Messages;
 message BotStatus {
   enum SensorType
   {
-    Internal = 0;
+    INTERNAL = 0;
     GPS = 1;
   }
   int32 health = 1;

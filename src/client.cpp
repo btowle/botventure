@@ -35,11 +35,20 @@ int main(int argc, char* argv[]){
     mWriter.SendHandshake(Messages::Handshake::NEWGAME);
     //HANDSHAKECOMPLETE
 
-    while(mReader.GetNextMessage()){
-      //if(mReader.CurrentMessageType() == Messages::Header::MAP){
-      //  Map::Map2D map(mReader.CurrentMessage<Messages::Map>());
-    	//  std::cout << map.GetWidth() << "," << map.GetHeight() << std::endl << std::flush;
-      //}
+
+    while(mReader.GetNextMessage() &&
+          mReader.CurrentMessageType() == Messages::Header::GAMEINFO){
+      mWriter.SendSensorRequest(Messages::BotStatus::GPS);
+      if(!mReader.GetNextMessage() ||
+          mReader.CurrentMessageType() != Messages::Header::SENSORRESPONSE ||
+          mReader.CurrentMessage<Messages::SensorResponse>().sensor_type() != Messages::BotStatus::GPS){
+        throw std::runtime_error("Server did not response appropriately to SensorRequest");
+      }
+      Messages::Map map = mReader.CurrentMessage<Messages::SensorResponse>().map();
+      std::cout << "I recieved a map! " << map.width() << "," << map.height() << std::endl;
+      //do decisions
+      //send move request
+      //get move response
     }
     std::cout << "disconnected from server" << std::endl;
   }

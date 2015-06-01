@@ -11,20 +11,6 @@ namespace Network{
     sstream << std::flush;
   }
 
-/*
-  void MessageWriter::SendMap(const Map::Map2D& map){
-    header.set_message_type(Messages::Header::MAP);
-    Messages::Map mapMessage;
-    mapMessage.set_width(map.GetWidth());
-    mapMessage.set_height(map.GetHeight());
-    for(Map::Terrain n : map.GetNodes()){
-      mapMessage.add_nodes(n);
-    }
-    header.mutable_map()->CopyFrom(mapMessage);
-
-    SendMessage(header);
-  }
-*/
   void MessageWriter::SendActionRequest(){
     header.set_message_type(Messages::Header::ACTIONREQUEST);
     //set things on actionRequest
@@ -39,9 +25,9 @@ namespace Network{
     SendMessage(header);
   }
 
-  void MessageWriter::SendGameInfo(){
+  void MessageWriter::SendGameInfo(int turnNumber){
     header.set_message_type(Messages::Header::GAMEINFO);
-    //set things on gameInfo
+    gameInfo.set_turn_number(turnNumber);
     header.mutable_game_info()->CopyFrom(gameInfo);
     SendMessage(header);
   }
@@ -53,19 +39,39 @@ namespace Network{
     SendMessage(header);
   }
 
-  void MessageWriter::SendSensorRequest(){
+  void MessageWriter::SendSensorRequest(Messages::BotStatus::SensorType sensor){
     header.set_message_type(Messages::Header::SENSORREQUEST);
-    //set things on sensorRequest
+    sensorRequest.set_sensor_type(sensor);
     header.mutable_sensor_request()->CopyFrom(sensorRequest);
     SendMessage(header);
   }
 
-  void MessageWriter::SendSensorResponse(){
+  void MessageWriter::SendSensorResponse(const Map::Map2D& m){
     header.set_message_type(Messages::Header::SENSORRESPONSE);
-    //set things on sensorResponse
+    map.set_width(m.GetWidth());
+    map.set_height(m.GetHeight());
+    for(Map::Terrain n : m.GetNodes()){
+      map.add_nodes(n);
+    }
+    sensorResponse.mutable_map()->CopyFrom(map);
+    sensorResponse.set_sensor_type(Messages::BotStatus::GPS);
     header.mutable_sensor_response()->CopyFrom(sensorResponse);
     SendMessage(header);
   }
+/*
+  void MessageWriter::SendMap(const Map::Map2D& map){
+    header.set_message_type(Messages::Header::MAP);
+    Messages::Map mapMessage;
+    mapMessage.set_width(map.GetWidth());
+    mapMessage.set_height(map.GetHeight());
+    for(Map::Terrain n : map.GetNodes()){
+      mapMessage.add_nodes(n);
+    }
+    header.mutable_map()->CopyFrom(mapMessage);
+
+    SendMessage(header);
+  }
+*/
 
 }
 }
