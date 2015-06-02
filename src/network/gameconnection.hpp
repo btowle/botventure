@@ -4,6 +4,7 @@
 #include "messagereader.hpp"
 #include "messagewriter.hpp"
 #include "../world/map2d.hpp"
+#include "../world/worldmanager.hpp"
 #include "Poco/Net/TCPServer.h"
 #include "Poco/Net/TCPServerConnection.h"
 #include "Poco/Net/StreamSocket.h"
@@ -26,7 +27,7 @@ private:
   MessageReader mReader;
   MessageWriter mWriter;
 
-
+  World::WorldManager worldManager;
 	World::Map2D& map;
   int turnNumber;
 

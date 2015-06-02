@@ -2,6 +2,7 @@
 #include "network/messagewriter.hpp"
 #include "network/messages.hpp"
 #include "network/defaults.hpp"
+#include "world/map2d.hpp"
 #include <iostream>
 #include <stdlib.h>
 #include "Poco/Exception.h"
@@ -45,6 +46,8 @@ int main(int argc, char* argv[]){
       }
       Messages::Map map = mReader.CurrentMessage<Messages::SensorResponse>().map();
       std::cout << "I recieved a map! " << map.width() << "," << map.height() << std::endl;
+      World::Map2D worldMap(map);
+      std::cout << worldMap.ToString() << std::endl;
       //do decisions
       //send move request
       //get move response

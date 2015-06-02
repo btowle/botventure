@@ -11,3 +11,4 @@ configure_file(
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 add_subdirectory(src)
+file(INSTALL maps DESTINATION ${CMAKE_BINARY_DIR})
