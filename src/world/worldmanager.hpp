@@ -13,6 +13,8 @@ class WorldManager{
 public:
   WorldManager();
   const Map2D& GetMap() const;
+  const std::vector<Mob>& GetEnemies() const;
+  const Mob& GetPlayer() const;
 
 private:
   Map2D map;

@@ -9,5 +9,7 @@ message BotStatus {
     GPS = 1;
   }
   int32 health = 1;
-  repeated SensorType available_sensors = 2;
+  int32 x = 2;
+  int32 y = 3;
+  repeated SensorType available_sensors = 4;
 }

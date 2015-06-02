@@ -87,7 +87,7 @@ void GameConnection::HandleSensorRequest(){
       break;
     case Messages::BotStatus::GPS:
       std::cout << "Handling GPS Request" << std::endl << std::flush;
-      mWriter.SendSensorResponse(worldManager.GetMap());
+      mWriter.SendSensorResponse(worldManager.GetMap(), worldManager.GetEnemies(), worldManager.GetPlayer());
       break;
   }
   //.map

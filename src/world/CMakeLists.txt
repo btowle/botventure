@@ -1,3 +1,3 @@
-add_library(world map2d.cpp mob.cpp worldmanager.cpp position)
+add_library(world map2d.cpp mob.cpp worldmanager.cpp position.cpp)
 target_compile_features(world PUBLIC cxx_range_for)
 #add_library(map2d map2d.cpp)

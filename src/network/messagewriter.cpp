@@ -58,6 +58,32 @@ namespace Network{
     header.mutable_sensor_response()->CopyFrom(sensorResponse);
     SendMessage(header);
   }
+
+  void MessageWriter::SendSensorResponse(const World::Map2D& m, const std::vector<World::Mob>& enemies, const World::Mob& player){
+    header.set_message_type(Messages::Header::SENSORRESPONSE);
+    map.set_width(m.GetWidth());
+    map.set_height(m.GetHeight());
+    for(World::Terrain n : m.GetNodes()){
+      map.add_nodes(n);
+    }
+    sensorResponse.mutable_map()->CopyFrom(map);
+
+    for(World::Mob mob : enemies){
+      enemy.set_health(mob.health);
+      enemy.set_x(mob.position.x);
+      enemy.set_y(mob.position.y);
+      sensorResponse.add_enemies()->CopyFrom(enemy);
+    }
+
+    botStatus.set_health(player.health);
+    botStatus.set_x(player.position.x);
+    botStatus.set_y(player.position.y);
+    sensorResponse.mutable_bot_status()->CopyFrom(botStatus);
+
+    sensorResponse.set_sensor_type(Messages::BotStatus::GPS);
+    header.mutable_sensor_response()->CopyFrom(sensorResponse);
+    SendMessage(header);
+  }
 /*
   void MessageWriter::SendMap(const World::Map2D& map){
     header.set_message_type(Messages::Header::MAP);

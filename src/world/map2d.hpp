@@ -2,6 +2,7 @@
 #define world_map2d_
 
 #include "../network/messages.hpp"
+#include "mob.hpp"
 #include "position.hpp"
 #include <string>
 #include <utility>
@@ -21,6 +22,7 @@ public:
 
   void Load(std::string const fileName);
   std::string ToString() const;
+  std::string ToString(const std::vector<Mob>& enemies, const Mob& player) const;
 
   static Terrain CharToTerrain(const char& c);
   static char TerrainToChar(const Terrain& t);
@@ -39,6 +41,9 @@ public:
 	const Terrain& GetNode(int x, int y) const;
 
   int Index(int x, int y) const;
+
+  std::vector<Position> enemySpawns;
+  Position playerSpawn;
 
 private:
 	int width;

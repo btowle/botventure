@@ -1,7 +1,11 @@
 #include "map2d.hpp"
+#include "mob.hpp"
+#include "position.hpp"
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <map>
 
 namespace Botventure{
 namespace World{
@@ -32,6 +36,12 @@ namespace World{
         //lines are reversed since text is opposite of internal storage.
         std::string s = lines[height - y - 1];
         for(int x=0; x<s.length(); ++x){
+          if(s[x] == '&'){
+            enemySpawns.push_back(Position(x,y));
+          }
+          if(s[x] == '@'){
+            playerSpawn = Position(x,y);
+          }
           GetNode(x,y) = CharToTerrain(s[x]);
         }
       }
@@ -47,6 +57,30 @@ namespace World{
       for(int x=0; x<width; ++x){
         Terrain t = GetNode(x,y);
         ss << TerrainToChar(t);
+      }
+      if(y > 0){
+        ss << std::endl;
+      }
+    }
+    return ss.str();
+  }
+
+  std::string Map2D::ToString(const std::vector<Mob>& enemies, const Mob& player) const{
+    std::stringstream ss;
+    for(int y=height-1; y>=0; --y){
+      for(int x=0; x<width; ++x){
+        auto it = std::find_if(enemies.begin(), enemies.end(),
+                              [x, y](const Mob& m)->bool{
+                                return m.position == Position(x,y);
+                              });
+        if(it != enemies.end()){
+          ss << '&';
+        }else if(player.position == Position(x,y)){
+          ss << '@';
+        }else{
+          Terrain t = GetNode(x,y);
+          ss << TerrainToChar(t);
+        }
       }
       if(y > 0){
         ss << std::endl;
@@ -84,37 +118,31 @@ namespace World{
 	}
 
   Terrain Map2D::CharToTerrain(const char& c){
-    switch(c){
-      case ' ':
-        return Messages::Map::GROUND;
-        break;
-      case 'X':
-        return Messages::Map::WALL;
-        break;
-      case '?':
-        return Messages::Map::UNKNOWN;
-        break;
-      default:
-        return Messages::Map::WALL;
-        break;
+    static std::map<char, Messages::Map::NodeType> map;
+    if(map.empty()){
+      map[' '] = Messages::Map::GROUND;
+      map['@'] = Messages::Map::GROUND;
+      map['&'] = Messages::Map::GROUND;
+      map['X'] = Messages::Map::WALL;
+      map['?'] = Messages::Map::UNKNOWN;
     }
+    if(map.count(c)){
+      return map[c];
+    }
+    return Messages::Map::WALL;
   }
 
   char Map2D::TerrainToChar(const Terrain& t){
-    switch(t){
-      case Messages::Map::GROUND:
-        return ' ';
-        break;
-      case Messages::Map::WALL:
-        return 'X';
-        break;
-      case Messages::Map::UNKNOWN:
-        return '?';
-        break;
-      default:
-        return '?';
-        break;
+    static std::map<Messages::Map::NodeType, char> map;
+    if(map.empty()){
+      map[Messages::Map::GROUND] = ' ';
+      map[Messages::Map::WALL] = 'X';
+      map[Messages::Map::UNKNOWN] = '?';
     }
+    if(map.count(t)){
+      return map[t];
+    }
+    return 'X';
   }
 }
 }

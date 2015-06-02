@@ -3,6 +3,7 @@
 
 #include "messages.hpp"
 #include "../world/map2d.hpp"
+#include "../world/mob.hpp"
 #include "Poco/Net/SocketStream.h"
 
 namespace Botventure{
@@ -22,6 +23,7 @@ public:
   void SendHandshake(Messages::Handshake::Step step);
   void SendSensorRequest(Messages::BotStatus::SensorType sensor);
   void SendSensorResponse(const World::Map2D& map);
+  void SendSensorResponse(const World::Map2D& map, const std::vector<World::Mob>& enemies, const World::Mob& player);
   //void SendSensorResponse(const Bot bot);
 
 private:
@@ -30,6 +32,7 @@ private:
   Messages::ActionRequest actionRequest;
   Messages::ActionResponse actionResponse;
   Messages::BotStatus botStatus;
+  Messages::Enemy enemy;
   Messages::GameInfo gameInfo;
   Messages::Handshake handshake;
   Messages::Map map;

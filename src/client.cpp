@@ -3,6 +3,8 @@
 #include "network/messages.hpp"
 #include "network/defaults.hpp"
 #include "world/map2d.hpp"
+#include "world/mob.hpp"
+#include "world/position.hpp"
 #include <iostream>
 #include <stdlib.h>
 #include "Poco/Exception.h"
@@ -44,10 +46,21 @@ int main(int argc, char* argv[]){
           mReader.CurrentMessage<Messages::SensorResponse>().sensor_type() != Messages::BotStatus::GPS){
         throw std::runtime_error("Server did not response appropriately to SensorRequest");
       }
-      Messages::Map map = mReader.CurrentMessage<Messages::SensorResponse>().map();
+      Messages::SensorResponse msg = mReader.CurrentMessage<Messages::SensorResponse>();
+      Messages::Map map = msg.map();
       std::cout << "I recieved a map! " << map.width() << "," << map.height() << std::endl;
       World::Map2D worldMap(map);
-      std::cout << worldMap.ToString() << std::endl;
+
+      std::vector<World::Mob> enemies;
+      for(int i=0; i<msg.enemies_size(); ++i){
+        Messages::Enemy e = msg.enemies(i);
+        enemies.push_back(World::Mob(World::Position(e.x(), e.y()), e.health()));
+      }
+
+      Messages::BotStatus b = msg.bot_status();
+      World::Mob player(World::Position(b.x(), b.y()), b.health());
+
+      std::cout << worldMap.ToString(enemies, player) << std::endl;
       //do decisions
       //send move request
       //get move response
