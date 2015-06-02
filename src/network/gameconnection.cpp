@@ -18,9 +18,13 @@ void GameConnection::run(){
 
     while(mReader.GetNextMessage()){
       HandleMessage();
-      //TODO:
-      //send turn++
+      if(actedThisTurn){
+        AdvanceTurn();
+      }
     }
+
+    std::cout << "Client disconnected." << std::endl;
+    std::cout << "Server thread exiting..." << std::endl;
 	}
   catch(Poco::TimeoutException const& e)
   {
@@ -53,8 +57,13 @@ void GameConnection::Handshake(){
 }
 
 void GameConnection::InitGame(){
-    turnNumber = 0;
-    mWriter.SendGameInfo(turnNumber);
+    turnNumber = -1;
+    AdvanceTurn();
+}
+
+void GameConnection::AdvanceTurn(){
+    actedThisTurn = false;
+    mWriter.SendGameInfo(++turnNumber);
 }
 
 void GameConnection::HandleMessage(){
@@ -97,12 +106,23 @@ void GameConnection::HandleSensorRequest(){
     //.available_sensors
 }
 void GameConnection::HandleActionRequest(){
-  //TODO: Handle actions
-  //Messages::ActionRequest::WAIT
-  //Messages::ActionRequest::MOVE
-  //Messages::ActionRequest::ATTACK
-  //Messages::ActionResponse::FAILURE
-  //Messages::ActionResponse::SUCCESS
+  actedThisTurn = true;
+  Messages::ActionRequest msg = mReader.CurrentMessage<Messages::ActionRequest>();
+  switch(msg.action_type()){
+    case Messages::ActionRequest::MOVE:
+      std::cout << "Handling Move Request" << std::endl << std::flush;
+      mWriter.SendActionResponse(worldManager.MovePlayer(msg.direction()));
+      break;
+    case Messages::ActionRequest::ATTACK:
+      mWriter.SendActionResponse(false);
+      break;
+    case Messages::ActionRequest::WAIT:
+      mWriter.SendActionResponse(true);
+      break;
+    default:
+      mWriter.SendActionResponse(false);
+      break;
+  }
 }
 void GameConnection::HandleGameInfo(){
   //TODO: make gameinfo.proto contain info for start/restart/cleandisconnect/etc

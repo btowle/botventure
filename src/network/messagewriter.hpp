@@ -17,8 +17,8 @@ public:
 
   void SendMessage(const Messages::Header& msg) const;
   //void SendMap(const World::Map2D& map);
-  void SendActionRequest();
-  void SendActionResponse();
+  void SendActionRequest(Messages::ActionRequest::ActionType type, Messages::ActionRequest::Direction direction=Messages::ActionRequest::NONE);
+  void SendActionResponse(bool result);
   void SendGameInfo(int turnNumber);
   void SendHandshake(Messages::Handshake::Step step);
   void SendSensorRequest(Messages::BotStatus::SensorType sensor);

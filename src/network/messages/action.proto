@@ -9,13 +9,18 @@ message ActionRequest {
     MOVE = 1;
     ATTACK = 2;
   }
+  enum Direction
+  {
+    NONE = 0;
+    UP = 1;
+    RIGHT = 2;
+    DOWN = 3;
+    LEFT = 4;
+  }
+  ActionType action_type = 1;
+  Direction direction = 2;
 }
 
 message ActionResponse {
-  enum ResultType
-  {
-    FAILURE = 0;
-    SUCCESS = 1;
-  }
-  ResultType result = 2;
+  bool result = 1;
 }

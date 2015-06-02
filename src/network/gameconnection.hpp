@@ -30,9 +30,11 @@ private:
   World::WorldManager worldManager;
 	World::Map2D& map;
   int turnNumber;
+  bool actedThisTurn;
 
   void Handshake();
   void InitGame();
+  void AdvanceTurn();
   void HandleMessage();
   void HandleSensorRequest();
   void HandleActionRequest();

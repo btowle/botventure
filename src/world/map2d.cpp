@@ -144,5 +144,9 @@ namespace World{
     }
     return 'X';
   }
+
+  bool Map2D::InBounds(Position p) const{
+    return p.x >= 0 && p.x < width && p.y >= 0 && p.y < width;
+  }
 }
 }

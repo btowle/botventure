@@ -42,6 +42,8 @@ public:
 
   int Index(int x, int y) const;
 
+  bool InBounds(Position p) const;
+
   std::vector<Position> enemySpawns;
   Position playerSpawn;
 

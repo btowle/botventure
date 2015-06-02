@@ -4,6 +4,7 @@
 #include "map2d.hpp"
 #include "mob.hpp"
 #include "position.hpp"
+#include "../network/messages.hpp"
 #include <vector>
 
 namespace Botventure{
@@ -16,7 +17,11 @@ public:
   const std::vector<Mob>& GetEnemies() const;
   const Mob& GetPlayer() const;
 
+  bool MovePlayer(Messages::ActionRequest::Direction direction);
+
 private:
+  bool MovePlayer(Position offset);
+
   Map2D map;
   std::vector<Mob> enemies;
   Mob player;

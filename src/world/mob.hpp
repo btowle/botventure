@@ -8,6 +8,7 @@ namespace World{
 
 class Mob{
 public:
+  Mob(const Mob& mob) : position(mob.position), health(mob.health){}
   Mob(Position position=Position(), int health=10) : position(position), health(health){}
 
   Position position;

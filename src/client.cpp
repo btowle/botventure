@@ -40,6 +40,10 @@ int main(int argc, char* argv[]){
 
     while(mReader.GetNextMessage() &&
           mReader.CurrentMessageType() == Messages::Header::GAMEINFO){
+      // get turn number
+      std::cout << "TURN " << mReader.CurrentMessage<Messages::GameInfo>().turn_number() << std::endl;
+
+      //MAP REQUEST
       mWriter.SendSensorRequest(Messages::BotStatus::GPS);
       if(!mReader.GetNextMessage() ||
           mReader.CurrentMessageType() != Messages::Header::SENSORRESPONSE ||
@@ -48,7 +52,6 @@ int main(int argc, char* argv[]){
       }
       Messages::SensorResponse msg = mReader.CurrentMessage<Messages::SensorResponse>();
       Messages::Map map = msg.map();
-      std::cout << "I recieved a map! " << map.width() << "," << map.height() << std::endl;
       World::Map2D worldMap(map);
 
       std::vector<World::Mob> enemies;
@@ -61,9 +64,21 @@ int main(int argc, char* argv[]){
       World::Mob player(World::Position(b.x(), b.y()), b.health());
 
       std::cout << worldMap.ToString(enemies, player) << std::endl;
-      //do decisions
+      //MAP REQUEST COMPLETE
+
+      //MOVE REQUEST
       //send move request
+      mWriter.SendActionRequest(Messages::ActionRequest::MOVE, Messages::ActionRequest::DOWN);
       //get move response
+      if(!mReader.GetNextMessage() ||
+          mReader.CurrentMessageType() != Messages::Header::ACTIONRESPONSE){
+        throw std::runtime_error("Server did not response appropriately to ActionRequest");
+      }
+      if(mReader.CurrentMessage<Messages::ActionResponse>().result() == false){
+        std::cout << "I hit a wall, I give up" << std::endl;
+        break;
+      }
+      //MOVE REQUEST OVER
     }
     std::cout << "disconnected from server" << std::endl;
   }

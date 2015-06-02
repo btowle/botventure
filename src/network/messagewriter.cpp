@@ -11,16 +11,17 @@ namespace Network{
     sstream << std::flush;
   }
 
-  void MessageWriter::SendActionRequest(){
+  void MessageWriter::SendActionRequest(Messages::ActionRequest::ActionType type, Messages::ActionRequest::Direction direction){
     header.set_message_type(Messages::Header::ACTIONREQUEST);
-    //set things on actionRequest
+    actionRequest.set_action_type(type);
+    actionRequest.set_direction(direction);
     header.mutable_action_request()->CopyFrom(actionRequest);
     SendMessage(header);
   }
 
-  void MessageWriter::SendActionResponse(){
+  void MessageWriter::SendActionResponse(bool result){
     header.set_message_type(Messages::Header::ACTIONRESPONSE);
-    //set things on actionResponse
+    actionResponse.set_result(result);
     header.mutable_action_response()->CopyFrom(actionResponse);
     SendMessage(header);
   }
@@ -50,6 +51,7 @@ namespace Network{
     header.set_message_type(Messages::Header::SENSORRESPONSE);
     map.set_width(m.GetWidth());
     map.set_height(m.GetHeight());
+    map.clear_nodes();
     for(World::Terrain n : m.GetNodes()){
       map.add_nodes(n);
     }
@@ -63,11 +65,13 @@ namespace Network{
     header.set_message_type(Messages::Header::SENSORRESPONSE);
     map.set_width(m.GetWidth());
     map.set_height(m.GetHeight());
+    map.clear_nodes();
     for(World::Terrain n : m.GetNodes()){
       map.add_nodes(n);
     }
     sensorResponse.mutable_map()->CopyFrom(map);
 
+    sensorResponse.clear_enemies();
     for(World::Mob mob : enemies){
       enemy.set_health(mob.health);
       enemy.set_x(mob.position.x);
