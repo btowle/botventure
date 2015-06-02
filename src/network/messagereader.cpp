@@ -8,7 +8,11 @@ namespace Network{
     if(sstream.eof()){
       return false;
     }
+    while(headerSize > buffer.capacity()){
+      buffer.resize(buffer.capacity() * 2);
+    }
     sstream.read(buffer.data(), headerSize);
+
     if(!header.ParseFromArray(buffer.data(), headerSize)){
       throw std::runtime_error("Could not parse header");
     }
