@@ -4,6 +4,8 @@
 #include "../network/defaults.hpp"
 #include "../network/messagereader.hpp"
 #include "../network/messagewriter.hpp"
+#include "../world/map2d.hpp"
+#include "../world/mob.hpp"
 #include <string>
 #include "Poco/Net/StreamSocket.h"
 #include "Poco/Net/SocketAddress.h"

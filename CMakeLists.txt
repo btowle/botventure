@@ -10,5 +10,9 @@ configure_file(
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
+include_directories(${PROJECT_SOURCE_DIR})
+include_directories(${CMAKE_BINARY_DIR}/src/network/messages)
+
+add_subdirectory(swig)
 add_subdirectory(src)
 file(INSTALL maps DESTINATION ${CMAKE_BINARY_DIR})

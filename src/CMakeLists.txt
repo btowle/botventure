@@ -1,6 +1,3 @@
-include_directories(${PROJECT_SOURCE_DIR})
-include_directories(${CMAKE_BINARY_DIR}/src/network/messages)
-
 add_subdirectory(world)
 add_subdirectory(network)
 add_subdirectory(bot)

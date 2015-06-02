@@ -3,7 +3,6 @@
 #include "position.hpp"
 #include <algorithm>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 #include <map>
 
@@ -45,7 +44,6 @@ namespace World{
           GetNode(x,y) = CharToTerrain(s[x]);
         }
       }
-      std::cout << "map" << width << "," << height << std::endl;
     }else{
       throw std::runtime_error("could not open map file");
     }
