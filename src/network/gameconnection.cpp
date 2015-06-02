@@ -57,7 +57,7 @@ void GameConnection::Handshake(){
 }
 
 void GameConnection::InitGame(){
-    turnNumber = -1;
+    turnNumber = 0;
     AdvanceTurn();
 }
 
