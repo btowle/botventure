@@ -13,6 +13,7 @@ namespace World{
         enemies.push_back(Mob(p));
       }
       player = Mob(map.playerSpawn);
+      gameState = Messages::PLAYING;
     }
     catch(std::exception const& e)
     {
@@ -45,13 +46,16 @@ namespace World{
 
   bool WorldManager::MovePlayer(Position offset){
     if(map.InBounds(player.position + offset) &&
-       map.GetNode(player.position + offset) == Messages::Map::GROUND){
+       player.IsWalkable(map.GetNode(player.position + offset))){
       for(Mob enemy : enemies){
         if(enemy.position == player.position){
           return false;
         }
       }
       player.position += offset;
+      if(map.GetNode(player.position) == Messages::Map::GOAL){
+        gameState = Messages::SUCCESS;
+      }
       return true;
     }
     return false;

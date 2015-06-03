@@ -26,9 +26,10 @@ namespace Network{
     SendMessage(header);
   }
 
-  void MessageWriter::SendGameInfo(int turnNumber){
+  void MessageWriter::SendGameInfo(int turnNumber, Messages::GameState gameState){
     header.set_message_type(Messages::Header::GAMEINFO);
     gameInfo.set_turn_number(turnNumber);
+    gameInfo.set_game_state(gameState);
     header.mutable_game_info()->CopyFrom(gameInfo);
     SendMessage(header);
   }

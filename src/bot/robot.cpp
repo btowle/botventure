@@ -16,6 +16,13 @@ bool Robot::Connect(){
   return GetNextTurn();
 }
 
+bool Robot::IsPlaying(){
+  return playing;
+}
+bool Robot::IsWinner(){
+  return winner;
+}
+
 int Robot::GetTurn(){
   return currentTurn;
 }
@@ -87,7 +94,17 @@ bool Robot::RequestMap(){
 bool Robot::GetNextTurn(){
   if(mReader.GetNextMessage() &&
      mReader.CurrentMessageType() == Messages::Header::GAMEINFO){
-    currentTurn = mReader.CurrentMessage<Messages::GameInfo>().turn_number();
+    Messages::GameInfo msg = mReader.CurrentMessage<Messages::GameInfo>();
+    currentTurn = msg.turn_number();
+    Messages::GameState state = msg.game_state();
+    if(state == Messages::SUCCESS){
+      winner = true;
+      playing = false;
+    }
+    if(state == Messages::FAILURE){
+      winner = false;
+      playing = false;
+    }
     connected = true;
     return true;
   }

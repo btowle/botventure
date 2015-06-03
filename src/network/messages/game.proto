@@ -2,6 +2,13 @@ syntax = "proto3";
 
 package Botventure.Messages;
 
+enum GameState{
+  PLAYING = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+}
+
 message GameInfo{
   int32 turn_number = 1;
+  GameState game_state = 2;
 }

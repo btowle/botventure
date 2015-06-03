@@ -35,6 +35,8 @@ public:
 
   bool Connect();
   bool connected = false;
+  bool IsPlaying();
+  bool IsWinner();
 
   int GetTurn();
   World::Map2D GetMap();
@@ -54,6 +56,8 @@ private:
   Network::MessageWriter mWriter;
 
   int currentTurn = 0;
+  bool playing = true;
+  bool winner = false;
 
   int mapTurn = -1;
   World::Map2D map;

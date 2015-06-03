@@ -18,6 +18,7 @@ public:
   const Mob& GetPlayer() const;
 
   bool MovePlayer(Messages::ActionRequest::Direction direction);
+  Messages::GameState GetGameState(){ return gameState; }
 
 private:
   bool MovePlayer(Position offset);
@@ -25,6 +26,7 @@ private:
   Map2D map;
   std::vector<Mob> enemies;
   Mob player;
+  Messages::GameState gameState;
 
 };
 

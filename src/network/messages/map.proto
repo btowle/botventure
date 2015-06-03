@@ -7,6 +7,7 @@ message Map {
 		UNKNOWN = 0;
 		GROUND = 1;
 		WALL = 2;
+    GOAL = 3;
 	}
 	repeated NodeType nodes = 1 [packed=true];
 	int32 width = 2;

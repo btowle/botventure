@@ -123,6 +123,7 @@ namespace World{
       map['&'] = Messages::Map::GROUND;
       map['X'] = Messages::Map::WALL;
       map['?'] = Messages::Map::UNKNOWN;
+      map['G'] = Messages::Map::GOAL;
     }
     if(map.count(c)){
       return map[c];
@@ -136,6 +137,7 @@ namespace World{
       map[Messages::Map::GROUND] = ' ';
       map[Messages::Map::WALL] = 'X';
       map[Messages::Map::UNKNOWN] = '?';
+      map[Messages::Map::GOAL] = 'G';
     }
     if(map.count(t)){
       return map[t];

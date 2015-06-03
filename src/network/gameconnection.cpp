@@ -16,14 +16,20 @@ void GameConnection::run(){
     Handshake();
     InitGame();
 
-    while(mReader.GetNextMessage()){
+    //Simulate world here
+
+    while(mReader.GetNextMessage() &&
+          worldManager.GetGameState() == Messages::PLAYING){
       HandleMessage();
       if(actedThisTurn){
         AdvanceTurn();
       }
     }
-
-    std::cout << "Client disconnected." << std::endl;
+    if(worldManager.GetGameState() == Messages::PLAYING){
+      std::cout << "Client disconnected." << std::endl;
+    }else{
+      std::cout << "The game is over!" << std::endl;
+    }
     std::cout << "Server thread exiting..." << std::endl;
 	}
   catch(Poco::TimeoutException const& e)
@@ -63,7 +69,7 @@ void GameConnection::InitGame(){
 
 void GameConnection::AdvanceTurn(){
     actedThisTurn = false;
-    mWriter.SendGameInfo(++turnNumber);
+    mWriter.SendGameInfo(++turnNumber, worldManager.GetGameState());
 }
 
 void GameConnection::HandleMessage(){
