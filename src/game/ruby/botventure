@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.dirname(__FILE__) + "../../lib/ruby")
+
+require '../../lib/ruby/botventure.so'
+
+server = Botventure::GameServer.new
+server.start
+
+require 'player.rb' if ARGV.length == 0
+require ARGV[0] if ARGV.length == 1
+
+player = Player.new
+
+bot = Botventure::Robot.new
+bot.connect
+
+while bot.connected && bot.is_playing do
+  break if server.disconnected
+  player.do_turn(bot)
+end
+
+puts "Turn: #{bot.get_turn}"
+if bot.is_winner then
+  puts "You win!"
+else
+  puts "You lose!"
+end
+
+server.stop

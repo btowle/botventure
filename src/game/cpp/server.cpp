@@ -11,7 +11,6 @@ using namespace Botventure;
 
 int main(int argc, char* argv[]){
   Network::GameServer gameServer;
-
   gameServer.Start();
 
 	std::string input;

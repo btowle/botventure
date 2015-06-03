@@ -17,6 +17,9 @@ void GameServer::Stop(){
   server.stop();
 }
 
+bool GameServer::Disconnected(){
+  return server.currentConnections() == 0;
+}
 
 }
 }

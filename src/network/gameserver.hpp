@@ -14,6 +14,7 @@ public:
   GameServer();
   void Start();
   void Stop();
+  bool Disconnected();
 private:
   Poco::Net::TCPServer server;
 };
