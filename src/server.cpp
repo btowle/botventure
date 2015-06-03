@@ -1,21 +1,19 @@
-#include "world/map2d.hpp"
-#include "network/defaults.hpp"
-#include "network/gameconnection.hpp"
-#include "network/gameconnectionfactory.hpp"
+#include "network/gameserver.hpp"
+//#include "world/map2d.hpp"
+//#include "network/defaults.hpp"
+//#include "network/gameconnection.hpp"
+//#include "network/gameconnectionfactory.hpp"
 #include <iostream>
-#include "Poco/Net/TCPServerParams.h"
+#include <string>
+//#include "Poco/Net/TCPServerParams.h"
 
 using namespace Botventure;
 
 int main(int argc, char* argv[]){
-	World::Map2D map(10,10);
-	
-  Poco::Net::TCPServerParams* params = new Poco::Net::TCPServerParams();
-  params->setMaxThreads(1);
+  Network::GameServer gameServer;
 
-	Poco::Net::TCPServer server(new Network::GameConnectionFactory<Network::GameConnection>(map), Network::Defaults::Port, params);
-	server.start();
-	
+  gameServer.Start();
+
 	std::string input;
 	while(std::cin >> input){
 		if(input.compare("exit") == 0){
@@ -23,5 +21,6 @@ int main(int argc, char* argv[]){
 			break;
 		}
 	}
-  server.stop();
+
+  gameServer.Stop();
 }

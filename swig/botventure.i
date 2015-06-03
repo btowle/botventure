@@ -3,6 +3,7 @@
 
 %{
 #include "src/bot/robot.hpp"
+#include "src/network/gameserver.hpp"
 using namespace Botventure;
 using namespace World;
 %}
@@ -15,6 +16,9 @@ namespace std {
 %include "src/world/mob.hpp"
 %include "src/world/map2d.hpp"
 %include "src/bot/robot.hpp"
+
+%import "src/network/gameconnection.hpp"
+%include "src/network/gameserver.hpp"
 
 //Redefine constants so comparisons work in ruby
 %constant const Botventure::Bot::Direction NODIRECTION = Bot::NODIRECTION;

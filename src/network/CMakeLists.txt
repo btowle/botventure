@@ -1,7 +1,7 @@
 add_subdirectory(messages)
 add_library(gameconnection gameconnection.cpp gameconnectionfactory.hpp)
 target_link_libraries(gameconnection world)
-add_library(network messagereader.cpp messagewriter.cpp messages.hpp defaults.hpp)
+add_library(network gameserver.cpp messagereader.cpp messagewriter.cpp messages.hpp defaults.hpp)
 SET_TARGET_PROPERTIES(network PROPERTIES COMPILE_FLAGS "-fPIC")
 add_dependencies(network messages)
 target_compile_features(network PUBLIC cxx_range_for)

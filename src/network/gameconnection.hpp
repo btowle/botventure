@@ -15,7 +15,8 @@ namespace Network{
 class GameConnection : public Poco::Net::TCPServerConnection
 {
 public:
-	GameConnection(const Poco::Net::StreamSocket& s, World::Map2D& map): TCPServerConnection(s), streamsocket(s), sstream(streamsocket), mReader(sstream), mWriter(sstream), map(map) {
+	//GameConnection(const Poco::Net::StreamSocket& s, World::Map2D& map): TCPServerConnection(s), streamsocket(s), sstream(streamsocket), mReader(sstream), mWriter(sstream), map(map) {
+	GameConnection(const Poco::Net::StreamSocket& s): TCPServerConnection(s), streamsocket(s), sstream(streamsocket), mReader(sstream), mWriter(sstream){
     streamsocket.setReceiveTimeout(5000000);
     streamsocket.setReceiveTimeout(5000000);
     }
@@ -28,7 +29,7 @@ private:
   MessageWriter mWriter;
 
   World::WorldManager worldManager;
-	World::Map2D& map;
+	//World::Map2D& map;
   int turnNumber;
   bool actedThisTurn;
 
