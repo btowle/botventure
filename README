@@ -2,6 +2,7 @@ Build Dependencies:
 Google's Protocol Buffers: https://github.com/google/protobuf
 POCO C++ Libraries: http://pocoproject.org/
 CMake >= 2.8.12: http://www.cmake.org/
+SWIG >= 3.0.2 http://www.swig.org/
 C++11 compatible compiler
 
 Building in Linux:
