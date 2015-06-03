@@ -12,7 +12,7 @@ public:
   Mob(const Mob& mob) : position(mob.position), health(mob.health){}
   Mob(Position position=Position(), int health=10) : position(position), health(health){}
 
-  virtual bool IsWalkable(Messages::Map::NodeType t);
+  virtual bool IsWalkable(Messages::NodeType t);
 
   Position position;
   int health;

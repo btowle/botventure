@@ -9,7 +9,7 @@
 namespace Botventure{
 namespace World{
 	
-	Map2D::Map2D(const Messages::Map& msg) : width(msg.width()), height(msg.height()), nodes(width*height, Messages::Map::UNKNOWN){
+	Map2D::Map2D(const Messages::Map& msg) : width(msg.width()), height(msg.height()), nodes(width*height, Messages::UNKNOWN){
 		for(int i=0; i<msg.nodes_size(); ++i){
 			nodes[i] = msg.nodes(i);
 		}
@@ -30,7 +30,7 @@ namespace World{
       }
       width = maxLength;
       height = lines.size();
-      nodes = std::vector<Terrain>(width*height, Messages::Map::WALL);
+      nodes = std::vector<Terrain>(width*height, Messages::WALL);
       for(int y=0; y<height; ++y){
         //lines are reversed since text is opposite of internal storage.
         std::string s = lines[height - y - 1];
@@ -116,28 +116,28 @@ namespace World{
 	}
 
   Terrain Map2D::CharToTerrain(const char& c){
-    static std::map<char, Messages::Map::NodeType> map;
+    static std::map<char, Messages::NodeType> map;
     if(map.empty()){
-      map[' '] = Messages::Map::GROUND;
-      map['@'] = Messages::Map::GROUND;
-      map['&'] = Messages::Map::GROUND;
-      map['X'] = Messages::Map::WALL;
-      map['?'] = Messages::Map::UNKNOWN;
-      map['G'] = Messages::Map::GOAL;
+      map[' '] = Messages::GROUND;
+      map['@'] = Messages::GROUND;
+      map['&'] = Messages::GROUND;
+      map['X'] = Messages::WALL;
+      map['?'] = Messages::UNKNOWN;
+      map['G'] = Messages::GOAL;
     }
     if(map.count(c)){
       return map[c];
     }
-    return Messages::Map::WALL;
+    return Messages::WALL;
   }
 
   char Map2D::TerrainToChar(const Terrain& t){
-    static std::map<Messages::Map::NodeType, char> map;
+    static std::map<Messages::NodeType, char> map;
     if(map.empty()){
-      map[Messages::Map::GROUND] = ' ';
-      map[Messages::Map::WALL] = 'X';
-      map[Messages::Map::UNKNOWN] = '?';
-      map[Messages::Map::GOAL] = 'G';
+      map[Messages::GROUND] = ' ';
+      map[Messages::WALL] = 'X';
+      map[Messages::UNKNOWN] = '?';
+      map[Messages::GOAL] = 'G';
     }
     if(map.count(t)){
       return map[t];

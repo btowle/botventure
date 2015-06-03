@@ -16,8 +16,9 @@ namespace std {
 %include "src/world/map2d.hpp"
 %include "src/bot/robot.hpp"
 
-%constant const Botventure::Bot::Direction NONE = Messages::ActionRequest::NONE;
-%constant const Botventure::Bot::Direction UP = Messages::ActionRequest::UP;
-%constant const Botventure::Bot::Direction RIGHT = Messages::ActionRequest::RIGHT;
-%constant const Botventure::Bot::Direction DOWN = Messages::ActionRequest::DOWN;
-%constant const Botventure::Bot::Direction LEFT = Messages::ActionRequest::LEFT;
+//Redefine constants so comparisons work in ruby
+%constant const Botventure::Bot::Direction NODIRECTION = Bot::NODIRECTION;
+%constant const Botventure::Bot::Direction UP = Bot::UP;
+%constant const Botventure::Bot::Direction RIGHT = Bot::RIGHT;
+%constant const Botventure::Bot::Direction DOWN = Bot::DOWN;
+%constant const Botventure::Bot::Direction LEFT = Bot::LEFT;

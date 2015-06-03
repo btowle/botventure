@@ -17,7 +17,7 @@ public:
   const std::vector<Mob>& GetEnemies() const;
   const Mob& GetPlayer() const;
 
-  bool MovePlayer(Messages::ActionRequest::Direction direction);
+  bool MovePlayer(Messages::Direction direction);
   Messages::GameState GetGameState(){ return gameState; }
 
 private:

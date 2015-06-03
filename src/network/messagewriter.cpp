@@ -11,8 +11,8 @@ namespace Network{
     sstream << std::flush;
   }
 
-  void MessageWriter::SendActionRequest(Messages::ActionRequest::ActionType type, Messages::ActionRequest::Direction direction){
-    header.set_message_type(Messages::Header::ACTIONREQUEST);
+  void MessageWriter::SendActionRequest(Messages::ActionType type, Messages::Direction direction){
+    header.set_message_type(Messages::ACTIONREQUEST);
     actionRequest.set_action_type(type);
     actionRequest.set_direction(direction);
     header.mutable_action_request()->CopyFrom(actionRequest);
@@ -20,36 +20,36 @@ namespace Network{
   }
 
   void MessageWriter::SendActionResponse(bool result){
-    header.set_message_type(Messages::Header::ACTIONRESPONSE);
+    header.set_message_type(Messages::ACTIONRESPONSE);
     actionResponse.set_result(result);
     header.mutable_action_response()->CopyFrom(actionResponse);
     SendMessage(header);
   }
 
   void MessageWriter::SendGameInfo(int turnNumber, Messages::GameState gameState){
-    header.set_message_type(Messages::Header::GAMEINFO);
+    header.set_message_type(Messages::GAMEINFO);
     gameInfo.set_turn_number(turnNumber);
     gameInfo.set_game_state(gameState);
     header.mutable_game_info()->CopyFrom(gameInfo);
     SendMessage(header);
   }
 
-  void MessageWriter::SendHandshake(Messages::Handshake::Step step){
-    header.set_message_type(Messages::Header::HANDSHAKE);
+  void MessageWriter::SendHandshake(Messages::Step step){
+    header.set_message_type(Messages::HANDSHAKE);
     handshake.set_step(step);
     header.mutable_handshake()->CopyFrom(handshake);
     SendMessage(header);
   }
 
-  void MessageWriter::SendSensorRequest(Messages::BotStatus::SensorType sensor){
-    header.set_message_type(Messages::Header::SENSORREQUEST);
+  void MessageWriter::SendSensorRequest(Messages::SensorType sensor){
+    header.set_message_type(Messages::SENSORREQUEST);
     sensorRequest.set_sensor_type(sensor);
     header.mutable_sensor_request()->CopyFrom(sensorRequest);
     SendMessage(header);
   }
 
   void MessageWriter::SendSensorResponse(const World::Map2D& m){
-    header.set_message_type(Messages::Header::SENSORRESPONSE);
+    header.set_message_type(Messages::SENSORRESPONSE);
     map.set_width(m.GetWidth());
     map.set_height(m.GetHeight());
     map.clear_nodes();
@@ -57,13 +57,13 @@ namespace Network{
       map.add_nodes(n);
     }
     sensorResponse.mutable_map()->CopyFrom(map);
-    sensorResponse.set_sensor_type(Messages::BotStatus::GPS);
+    sensorResponse.set_sensor_type(Messages::GPS);
     header.mutable_sensor_response()->CopyFrom(sensorResponse);
     SendMessage(header);
   }
 
   void MessageWriter::SendSensorResponse(const World::Map2D& m, const std::vector<World::Mob>& enemies, const World::Mob& player){
-    header.set_message_type(Messages::Header::SENSORRESPONSE);
+    header.set_message_type(Messages::SENSORRESPONSE);
     map.set_width(m.GetWidth());
     map.set_height(m.GetHeight());
     map.clear_nodes();
@@ -85,24 +85,10 @@ namespace Network{
     botStatus.set_y(player.position.y);
     sensorResponse.mutable_bot_status()->CopyFrom(botStatus);
 
-    sensorResponse.set_sensor_type(Messages::BotStatus::GPS);
+    sensorResponse.set_sensor_type(Messages::GPS);
     header.mutable_sensor_response()->CopyFrom(sensorResponse);
     SendMessage(header);
   }
-/*
-  void MessageWriter::SendMap(const World::Map2D& map){
-    header.set_message_type(Messages::Header::MAP);
-    Messages::Map mapMessage;
-    mapMessage.set_width(map.GetWidth());
-    mapMessage.set_height(map.GetHeight());
-    for(World::Terrain n : map.GetNodes()){
-      mapMessage.add_nodes(n);
-    }
-    header.mutable_map()->CopyFrom(mapMessage);
-
-    SendMessage(header);
-  }
-*/
 
 }
 }

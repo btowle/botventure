@@ -1,16 +1,17 @@
 syntax = "proto3";
 
-package Botventure.Messages;
 import "botstatus.proto";
 import "enemy.proto";
 import "map.proto";
 
+package Botventure.Messages;
+
 message SensorRequest {
-  BotStatus.SensorType sensor_type = 1;
+  SensorType sensor_type = 1;
 }
 
 message SensorResponse {
-  BotStatus.SensorType sensor_type = 1;
+  SensorType sensor_type = 1;
   Map map = 2;
   repeated Enemy enemies = 3;
   BotStatus bot_status = 4;

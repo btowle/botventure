@@ -14,15 +14,13 @@
 namespace Botventure{
 namespace Bot{
 
-typedef Messages::ActionRequest::Direction Direction;
+typedef Messages::Direction Direction;
 
-#ifndef SWIG //constants redefined in robot.i for better swig interfaces
-static const Direction NONE = Messages::ActionRequest::NONE;
-static const Direction UP = Messages::ActionRequest::UP;
-static const Direction RIGHT = Messages::ActionRequest::RIGHT;
-static const Direction DOWN = Messages::ActionRequest::DOWN;
-static const Direction LEFT = Messages::ActionRequest::LEFT;
-#endif
+static const Direction NODIRECTION = Messages::NODIRECTION;
+static const Direction UP = Messages::UP;
+static const Direction RIGHT = Messages::RIGHT;
+static const Direction DOWN = Messages::DOWN;
+static const Direction LEFT = Messages::LEFT;
 
 class Robot{
 public:

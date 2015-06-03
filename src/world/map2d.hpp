@@ -12,11 +12,11 @@
 namespace Botventure{
 namespace World{
 
-typedef Messages::Map::NodeType Terrain;
+typedef Messages::NodeType Terrain;
 
 class Map2D{
 public:
-	Map2D(int width=1, int height=1) : width(width), height(height), nodes(width*height, Messages::Map::GROUND){}
+	Map2D(int width=1, int height=1) : width(width), height(height), nodes(width*height, Messages::GROUND){}
 	explicit Map2D(const Messages::Map& msg);
 	~Map2D(){}
 

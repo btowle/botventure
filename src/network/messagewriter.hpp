@@ -17,11 +17,11 @@ public:
 
   void SendMessage(const Messages::Header& msg) const;
   //void SendMap(const World::Map2D& map);
-  void SendActionRequest(Messages::ActionRequest::ActionType type, Messages::ActionRequest::Direction direction=Messages::ActionRequest::NONE);
+  void SendActionRequest(Messages::ActionType type, Messages::Direction direction=Messages::NODIRECTION);
   void SendActionResponse(bool result);
   void SendGameInfo(int turnNumber, Messages::GameState gameState);
-  void SendHandshake(Messages::Handshake::Step step);
-  void SendSensorRequest(Messages::BotStatus::SensorType sensor);
+  void SendHandshake(Messages::Step step);
+  void SendSensorRequest(Messages::SensorType sensor);
   void SendSensorResponse(const World::Map2D& map);
   void SendSensorResponse(const World::Map2D& map, const std::vector<World::Mob>& enemies, const World::Mob& player);
   //void SendSensorResponse(const Bot bot);

@@ -2,13 +2,14 @@ syntax = "proto3";
 
 package Botventure.Messages;
 
+enum NodeType{
+  UNKNOWN = 0;
+  GROUND = 1;
+  WALL = 2;
+  GOAL = 3;
+}
+
 message Map {
-	enum NodeType{
-		UNKNOWN = 0;
-		GROUND = 1;
-		WALL = 2;
-    GOAL = 3;
-	}
 	repeated NodeType nodes = 1 [packed=true];
 	int32 width = 2;
 	int32 height = 3;

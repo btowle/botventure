@@ -33,13 +33,13 @@ namespace World{
     return player;
   }
 
-  bool WorldManager::MovePlayer(Messages::ActionRequest::Direction direction){
-    static std::map<Messages::ActionRequest::Direction, Position> map;
+  bool WorldManager::MovePlayer(Messages::Direction direction){
+    static std::map<Messages::Direction, Position> map;
     if(map.empty()){
-      map[Messages::ActionRequest::UP] = Position(0,1);
-      map[Messages::ActionRequest::RIGHT] = Position(1,0);
-      map[Messages::ActionRequest::DOWN] = Position(0,-1);
-      map[Messages::ActionRequest::LEFT] = Position(-1,0);
+      map[Messages::UP] = Position(0,1);
+      map[Messages::RIGHT] = Position(1,0);
+      map[Messages::DOWN] = Position(0,-1);
+      map[Messages::LEFT] = Position(-1,0);
     }
     return MovePlayer(map[direction]);
   }
@@ -53,7 +53,7 @@ namespace World{
         }
       }
       player.position += offset;
-      if(map.GetNode(player.position) == Messages::Map::GOAL){
+      if(map.GetNode(player.position) == Messages::GOAL){
         gameState = Messages::SUCCESS;
       }
       return true;

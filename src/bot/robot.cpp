@@ -4,15 +4,15 @@ namespace Botventure{
 namespace Bot{
 
 bool Robot::Connect(){
-  mWriter.SendHandshake(Messages::Handshake::SYN);
+  mWriter.SendHandshake(Messages::SYN);
   if(!mReader.GetNextMessage() || 
-  mReader.CurrentMessageType() != Messages::Header::HANDSHAKE || 
-  mReader.CurrentMessage<Messages::Handshake>().step() != Messages::Handshake::ACK)
+  mReader.CurrentMessageType() != Messages::HANDSHAKE ||
+  mReader.CurrentMessage<Messages::Handshake>().step() != Messages::ACK)
   {  
     connected = false;
     return connected;
   }  
-  mWriter.SendHandshake(Messages::Handshake::NEWGAME);
+  mWriter.SendHandshake(Messages::NEWGAME);
   return GetNextTurn();
 }
 
@@ -50,9 +50,9 @@ World::Mob Robot::GetPlayer(){
 
 bool Robot::Move(Direction direction){
   if(!connected){ return false; }
-  mWriter.SendActionRequest(Messages::ActionRequest::MOVE, direction);
+  mWriter.SendActionRequest(Messages::MOVE, direction);
   if(!mReader.GetNextMessage() ||
-  mReader.CurrentMessageType() != Messages::Header::ACTIONRESPONSE){
+  mReader.CurrentMessageType() != Messages::ACTIONRESPONSE){
     connected = false;
     return false;
   }
@@ -66,10 +66,10 @@ bool Robot::Move(Direction direction){
 
 bool Robot::RequestMap(){
   if(!connected){ return false; }
-  mWriter.SendSensorRequest(Messages::BotStatus::GPS);
+  mWriter.SendSensorRequest(Messages::GPS);
   if(!mReader.GetNextMessage() || 
-  mReader.CurrentMessageType() != Messages::Header::SENSORRESPONSE || 
-  mReader.CurrentMessage<Messages::SensorResponse>().sensor_type() != Messages::BotStatus::GPS){
+  mReader.CurrentMessageType() != Messages::SENSORRESPONSE ||
+  mReader.CurrentMessage<Messages::SensorResponse>().sensor_type() != Messages::GPS){
     connected = false;
     return false;
   }  
@@ -93,7 +93,7 @@ bool Robot::RequestMap(){
 
 bool Robot::GetNextTurn(){
   if(mReader.GetNextMessage() &&
-     mReader.CurrentMessageType() == Messages::Header::GAMEINFO){
+     mReader.CurrentMessageType() == Messages::GAMEINFO){
     Messages::GameInfo msg = mReader.CurrentMessage<Messages::GameInfo>();
     currentTurn = msg.turn_number();
     Messages::GameState state = msg.game_state();

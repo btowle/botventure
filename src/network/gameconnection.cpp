@@ -49,14 +49,14 @@ void GameConnection::run(){
 
 void GameConnection::Handshake(){
     if(!mReader.GetNextMessage() ||
-      mReader.CurrentMessageType() != Messages::Header::HANDSHAKE ||
-      mReader.CurrentMessage<Messages::Handshake>().step() != Messages::Handshake::SYN){
+      mReader.CurrentMessageType() != Messages::HANDSHAKE ||
+      mReader.CurrentMessage<Messages::Handshake>().step() != Messages::SYN){
       throw std::runtime_error("Connection received without valid handshake.1");
     }
-    mWriter.SendHandshake(Messages::Handshake::ACK);
+    mWriter.SendHandshake(Messages::ACK);
     if(!mReader.GetNextMessage() ||
-      mReader.CurrentMessageType() != Messages::Header::HANDSHAKE ||
-      mReader.CurrentMessage<Messages::Handshake>().step() != Messages::Handshake::NEWGAME){
+      mReader.CurrentMessageType() != Messages::HANDSHAKE ||
+      mReader.CurrentMessage<Messages::Handshake>().step() != Messages::NEWGAME){
       throw std::runtime_error("Connection received without valid handshake.2");
     }
     std::cout << "connection received, new game" << std::endl;
@@ -73,21 +73,21 @@ void GameConnection::AdvanceTurn(){
 }
 
 void GameConnection::HandleMessage(){
-      Messages::Header::MessageType msgType = mReader.CurrentMessageType();
+      Messages::MessageType msgType = mReader.CurrentMessageType();
       switch(mReader.CurrentMessageType()){
-        case Messages::Header::SENSORREQUEST:
+        case Messages::SENSORREQUEST:
           HandleSensorRequest();
           break;
-        case Messages::Header::ACTIONREQUEST:
+        case Messages::ACTIONREQUEST:
           HandleActionRequest();
           break;
-        case Messages::Header::GAMEINFO:
+        case Messages::GAMEINFO:
           HandleGameInfo();
           break;
-        case Messages::Header::SENSORRESPONSE:
-        case Messages::Header::ACTIONRESPONSE:
-        case Messages::Header::HANDSHAKE:
-        case Messages::Header::ERROR:
+        case Messages::SENSORRESPONSE:
+        case Messages::ACTIONRESPONSE:
+        case Messages::HANDSHAKE:
+        case Messages::MESSAGEERROR:
         default:
           std::cerr << "Innapropriate message received." << mReader.CurrentMessageType() << std::endl;
           break;
@@ -96,11 +96,11 @@ void GameConnection::HandleMessage(){
 }
 void GameConnection::HandleSensorRequest(){
   switch(mReader.CurrentMessage<Messages::SensorRequest>().sensor_type()){
-    case Messages::BotStatus::INTERNAL:
+    case Messages::INTERNAL:
       //TODO: internal sensor sending
       //mWriter.SendSensorResponse();
       break;
-    case Messages::BotStatus::GPS:
+    case Messages::GPS:
       std::cout << "Handling GPS Request" << std::endl << std::flush;
       mWriter.SendSensorResponse(worldManager.GetMap(), worldManager.GetEnemies(), worldManager.GetPlayer());
       break;
@@ -115,14 +115,14 @@ void GameConnection::HandleActionRequest(){
   actedThisTurn = true;
   Messages::ActionRequest msg = mReader.CurrentMessage<Messages::ActionRequest>();
   switch(msg.action_type()){
-    case Messages::ActionRequest::MOVE:
+    case Messages::MOVE:
       std::cout << "Handling Move Request" << std::endl << std::flush;
       mWriter.SendActionResponse(worldManager.MovePlayer(msg.direction()));
       break;
-    case Messages::ActionRequest::ATTACK:
+    case Messages::ATTACK:
       mWriter.SendActionResponse(false);
       break;
-    case Messages::ActionRequest::WAIT:
+    case Messages::WAIT:
       mWriter.SendActionResponse(true);
       break;
     default:

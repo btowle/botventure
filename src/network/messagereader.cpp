@@ -19,31 +19,31 @@ namespace Network{
     messageType = header.message_type();
 
     switch(messageType){
-      case Messages::Header::ACTIONREQUEST:
+      case Messages::ACTIONREQUEST:
         actionRequest = header.action_request();
         currentMessage = &actionRequest;
         break;
-      case Messages::Header::ACTIONRESPONSE:
+      case Messages::ACTIONRESPONSE:
         actionResponse = header.action_response();
         currentMessage = &actionResponse;
         break;
-      case Messages::Header::GAMEINFO:
+      case Messages::GAMEINFO:
         gameInfo = header.game_info();
         currentMessage = &gameInfo;
         break;
-      case Messages::Header::HANDSHAKE:
+      case Messages::HANDSHAKE:
         handshake = header.handshake();
         currentMessage = &handshake;
         break;
-      case Messages::Header::SENSORREQUEST:
+      case Messages::SENSORREQUEST:
         sensorRequest = header.sensor_request();
         currentMessage = &sensorRequest;
         break;
-      case Messages::Header::SENSORRESPONSE:
+      case Messages::SENSORRESPONSE:
         sensorResponse = header.sensor_response();
         currentMessage = &sensorResponse;
         break;
-      case Messages::Header::ERROR:
+      case Messages::MESSAGEERROR:
       default:
         currentMessage = &header;
         break;
@@ -51,7 +51,7 @@ namespace Network{
     return true;
   }
   
-  Messages::Header::MessageType MessageReader::CurrentMessageType() const{
+  Messages::MessageType MessageReader::CurrentMessageType() const{
     return messageType;
   }
 

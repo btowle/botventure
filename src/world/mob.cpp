@@ -4,11 +4,11 @@
 namespace Botventure{
 namespace World{
 
-bool Mob::IsWalkable(Messages::Map::NodeType t){
-  static std::vector<Messages::Map::NodeType> walkable;
+bool Mob::IsWalkable(Messages::NodeType t){
+  static std::vector<Messages::NodeType> walkable;
   if(walkable.empty()){
-    walkable.push_back(Messages::Map::GROUND);
-    walkable.push_back(Messages::Map::GOAL);
+    walkable.push_back(Messages::GROUND);
+    walkable.push_back(Messages::GOAL);
   }
   auto iterator = find(walkable.begin(), walkable.end(), t);
   return iterator != walkable.end();

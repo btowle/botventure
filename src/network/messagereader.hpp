@@ -16,7 +16,7 @@ public:
   ~MessageReader() {}
 
   bool GetNextMessage();
-  Messages::Header::MessageType CurrentMessageType() const;
+  Messages::MessageType CurrentMessageType() const;
   template <class T>
   const T& CurrentMessage() const{
     return dynamic_cast<T&>(*currentMessage);
@@ -27,7 +27,7 @@ private:
   Messages::Header header;
   int headerSize;
   int messageLength;
-  Messages::Header::MessageType messageType;
+  Messages::MessageType messageType;
   std::vector<char> buffer;
 
   Messages::ActionRequest actionRequest;
