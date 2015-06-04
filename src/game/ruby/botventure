@@ -15,13 +15,13 @@ player = Player.new
 bot = Botventure::Robot.new
 bot.connect
 
-while bot.connected && bot.is_playing do
-  break if server.disconnected
+while bot.is_connected? && bot.is_playing? do
+  break if server.disconnected?
   player.do_turn(bot)
 end
 
-puts "Turn: #{bot.get_turn}"
-if bot.is_winner then
+puts "Turn: #{bot.turn}"
+if bot.is_winner? then
   puts "You win!"
 else
   puts "You lose!"

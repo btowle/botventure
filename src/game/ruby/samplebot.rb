@@ -1,42 +1,49 @@
 #Sample bot that runs to the goal of default.map
 class Player
 def do_turn(bot)
-  #Print the turn number
-  puts bot.get_map.get_width
-  puts "Turn: #{bot.get_turn}"
+  @bot = bot
 
   #Quit if we've run for longer than 25 turns
-  if bot.get_turn > 25 then
+  if bot.turn > 25 then
     puts "I'm tired, goodnight. zzzz"
     exit
   end
 
-  #Get information about the world
-  map = bot.get_map
-  enemies = bot.get_enemies
-  player = bot.get_player
+  get_world_info
 
-  #Print the map
-  puts map.to_string(enemies, player)
+  #Print the map with enemies and player position
+  puts @map.to_string(@enemies, @player)
 
+  decide_direction
+
+  bot.move! @direction
+end
+
+def get_world_info
+  @map = @bot.map
+  @enemies = @bot.enemies
+  @player = @bot.player
+end
+
+def decide_direction
   @direction ||= Botventure::DOWN
   @left_moves ||= 0
 
-  #Move
-  if !bot.move @direction then
-    #Go left if we hit the bottom wall
-    if @direction == Botventure::DOWN then
-      puts "going left"
-      @direction = Botventure::LEFT
-    end
-  else
-    #Go up once we've gone left 5 times
-    if @direction == Botventure::LEFT then
-      @left_moves += 1
-    end
-    if @left_moves == 5 then
-      @direction = Botventure::UP
-    end
+  node_below = @map.node(@player.position + Botventure::Position.new(0,-1))
+
+  #Move left if there is a wall below us
+  if node_below == Botventure::WALL then
+    @direction = Botventure::LEFT
+  end
+
+  #Move up if we have moved left enough times
+  if @direction == Botventure::LEFT && @left_moves == 5 then
+    @direction = Botventure::UP
+  end
+
+  #Count the number of times we've moved left
+  if @direction == Botventure::LEFT then
+    @left_moves = @left_moves + 1
   end
 end
 end

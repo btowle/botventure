@@ -16,6 +16,15 @@ bool Robot::Connect(){
   return GetNextTurn();
 }
 
+bool Robot::Disconnect(){
+  connected = false;
+  socket.close();
+}
+
+bool Robot::IsConnected(){
+  return connected;
+}
+
 bool Robot::IsPlaying(){
   return playing;
 }

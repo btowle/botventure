@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
   {
     Bot::Robot bot;
     bot.Connect();
-    while(bot.connected){
+    while(bot.IsConnected()){
       std::cout << bot.GetTurn() << std::endl;
       //sense
       World::Map2D map(bot.GetMap());
@@ -18,9 +18,9 @@ int main(int argc, char* argv[]){
       std::vector<World::Mob> enemies(bot.GetEnemies());
       std::cout << map.ToString(enemies, player) << std::endl;
       //move
-      if(!bot.Move(Bot::DOWN)){
+      if(!bot.Move(Messages::DOWN)){
         std::cout << "I hit a wall, I give up." << std::endl;
-        bot.connected = false;
+        bot.Disconnect();
       }
     }
     std::cout << "disconnected from server" << std::endl;

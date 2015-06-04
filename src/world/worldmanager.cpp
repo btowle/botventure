@@ -45,7 +45,7 @@ namespace World{
   }
 
   bool WorldManager::MovePlayer(Position offset){
-    if(map.InBounds(player.position + offset) &&
+    if(map.IsInBounds(player.position + offset) &&
        player.IsWalkable(map.GetNode(player.position + offset))){
       for(Mob enemy : enemies){
         if(enemy.position == player.position){

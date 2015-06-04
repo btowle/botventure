@@ -53,7 +53,7 @@ namespace Network{
     map.set_width(m.GetWidth());
     map.set_height(m.GetHeight());
     map.clear_nodes();
-    for(World::Terrain n : m.GetNodes()){
+    for(Messages::NodeType n : m.GetNodes()){
       map.add_nodes(n);
     }
     sensorResponse.mutable_map()->CopyFrom(map);
@@ -67,7 +67,7 @@ namespace Network{
     map.set_width(m.GetWidth());
     map.set_height(m.GetHeight());
     map.clear_nodes();
-    for(World::Terrain n : m.GetNodes()){
+    for(Messages::NodeType n : m.GetNodes()){
       map.add_nodes(n);
     }
     sensorResponse.mutable_map()->CopyFrom(map);

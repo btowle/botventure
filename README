@@ -1,12 +1,69 @@
-Build Dependencies:
+#Building
+##Build Dependencies
 Google's Protocol Buffers: https://github.com/google/protobuf
 POCO C++ Libraries: http://pocoproject.org/
 CMake >= 2.8.12: http://www.cmake.org/
 SWIG >= 3.0.2 http://www.swig.org/
 C++11 compatible compiler
-
-Building in Linux:
+##Building in Linux
 mkdir build
 cd build
 cmake ..
 make
+
+#Playing
+##Ruby:
+###How to Play:
+cd /path/to/built/ruby/dir
+Add code to player.rb (see samplebot.rb for an example)
+run 'botventure'
+
+
+###Bot Methods:
+  #turn
+  #map
+  #enemies
+  #player
+  #move!(direction)
+
+###Mob Methods:
+  #is_walkable?(terrain)
+  #health
+  #health=
+  #position
+  #position=
+
+###Map Methods:
+  #to_string(enemies, player)
+  #to_s
+  #width
+  #height
+  #nodes
+  #node(index)
+  #node(x, y)
+  #node(position)
+  #is_in_bounds?(position)
+
+###Position Methods:
+  #==
+  #+
+  #-
+  #x
+  #x=
+  #y
+  #y=
+  #to_s
+
+###Botventure Constants:
+###Directions:
+  Botventure::NODIRECTION
+  Botventure::UP
+  Botventure::RIGHT
+  Botventure::DOWN
+  Botventure::LEFT
+
+###Terrain:
+  Botventure::UNKNOWN
+  Botventure::GROUND
+  Botventure::WALL
+  Botventure::GOAL

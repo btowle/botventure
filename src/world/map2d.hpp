@@ -42,7 +42,7 @@ public:
 
   int Index(int x, int y) const;
 
-  bool InBounds(Position p) const;
+  bool IsInBounds(Position p) const;
 
   std::vector<Position> enemySpawns;
   Position playerSpawn;
@@ -51,9 +51,6 @@ private:
 	int width;
 	int height;
 	std::vector<Terrain> nodes;
-	
-	mutable Messages::Header header;
-	mutable Messages::Map mapMessage;
 };
 
 }

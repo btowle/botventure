@@ -4,7 +4,7 @@
 namespace Botventure{
 namespace World{
 
-bool Mob::IsWalkable(Messages::NodeType t){
+bool Mob::IsWalkable(Messages::NodeType t) const{
   static std::vector<Messages::NodeType> walkable;
   if(walkable.empty()){
     walkable.push_back(Messages::GROUND);

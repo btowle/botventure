@@ -16,12 +16,6 @@ namespace Bot{
 
 typedef Messages::Direction Direction;
 
-static const Direction NODIRECTION = Messages::NODIRECTION;
-static const Direction UP = Messages::UP;
-static const Direction RIGHT = Messages::RIGHT;
-static const Direction DOWN = Messages::DOWN;
-static const Direction LEFT = Messages::LEFT;
-
 class Robot{
 public:
   Robot() : address("localhost", Network::Defaults::Port),
@@ -32,7 +26,8 @@ public:
   }
 
   bool Connect();
-  bool connected = false;
+  bool Disconnect();
+  bool IsConnected();
   bool IsPlaying();
   bool IsWinner();
 
@@ -56,6 +51,7 @@ private:
   int currentTurn = 0;
   bool playing = true;
   bool winner = false;
+  bool connected = false;
 
   int mapTurn = -1;
   World::Map2D map;
