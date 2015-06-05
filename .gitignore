@@ -1,3 +1,4 @@
+src/botventureconfig.h
 build/*
 */bin/*
 *.a
