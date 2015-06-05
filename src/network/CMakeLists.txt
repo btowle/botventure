@@ -1,6 +1,4 @@
 add_subdirectory(messages)
-#add_library(gameconnection SHARED gameconnection.cpp gameconnectionfactory.hpp)
-#target_link_libraries(gameconnection world)
 add_library(network STATIC messagereader.cpp messagewriter.cpp messages.hpp defaults.hpp gameconnection.cpp gameconnectionfactory.hpp gameserver.cpp)
 SET_TARGET_PROPERTIES(network PROPERTIES COMPILE_FLAGS "-fPIC")
 add_dependencies(network messages world)

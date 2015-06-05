@@ -4,7 +4,13 @@
 #include "map2d.hpp"
 #include "mob.hpp"
 #include "position.hpp"
-#include "../network/messages.hpp"
+
+#ifdef RAKE_COMPILATION
+#include "messages.hpp"
+#else
+#include "network/messages.hpp"
+#endif //RAKE_COMPILATION
+
 #include <vector>
 
 namespace Botventure{

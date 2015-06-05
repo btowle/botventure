@@ -3,8 +3,15 @@
 
 #include "messagereader.hpp"
 #include "messagewriter.hpp"
-#include "../world/map2d.hpp"
-#include "../world/worldmanager.hpp"
+
+#ifdef RAKE_COMPILATION
+#include "map2d.hpp"
+#include "worldmanager.hpp"
+#else
+#include "world/map2d.hpp"
+#include "world/worldmanager.hpp"
+#endif //RAKE_COMPILATION
+
 #include "Poco/Net/TCPServer.h"
 #include "Poco/Net/TCPServerConnection.h"
 #include "Poco/Net/StreamSocket.h"

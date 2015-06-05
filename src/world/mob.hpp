@@ -1,7 +1,11 @@
 #ifndef world_mob_
 #define world_mob_
 
-#include "../network/messages.hpp"
+#ifdef RAKE_COMPILATION
+#include "messages.hpp"
+#else
+#include "network/messages.hpp"
+#endif //RAKE_COMPILATION
 #include "position.hpp"
 
 namespace Botventure{

@@ -1,11 +1,20 @@
 #ifndef bot_robot_
 #define bot_robot_
 
-#include "../network/defaults.hpp"
-#include "../network/messagereader.hpp"
-#include "../network/messagewriter.hpp"
-#include "../world/map2d.hpp"
-#include "../world/mob.hpp"
+#ifdef RAKE_COMPILATION
+#include "defaults.hpp"
+#include "messagereader.hpp"
+#include "messagewriter.hpp"
+#include "map2d.hpp"
+#include "mob.hpp"
+#else
+#include "network/defaults.hpp"
+#include "network/messagereader.hpp"
+#include "network/messagewriter.hpp"
+#include "world/map2d.hpp"
+#include "world/mob.hpp"
+#endif //RAKE_COMPILATION
+
 #include <string>
 #include "Poco/Net/StreamSocket.h"
 #include "Poco/Net/SocketAddress.h"

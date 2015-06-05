@@ -1,0 +1,31 @@
+require 'rake/extensiontask'
+
+spec =Gem::Specification.new do |s|
+  s.name        = 'botventure'
+  s.version     = '@Botventure_VERSION_MAJOR@.@Botventure_VERSION_MINOR@.@Botventure_VERSION_PATCH@'
+  s.date        = '2015-06-04'
+  s.summary     = 'Botventure'
+  s.description = 'Rubywarrior-like adventure game written in C++'
+  s.author      = 'Brian Towle'
+  s.homepage    = 'https://github.com/btowle/botventure'
+  s.license     = 'MIT'
+  s.files       = Dir.glob("{lib,ext,data}/**/*.{cpp,hpp,cc,h,rb,map}") -
+                  Dir.glob("tmp/**/*") -
+                  Dir.glob("[Cc][Mm]ake{**/*,*}")
+  s.extensions  = FileList['ext/**/extconf.rb']
+  s.platform    = Gem::Platform::RUBY
+  s.executables = 'botventure'
+end
+
+Gem::PackageTask.new(spec) do |pkg|
+end
+
+Rake::ExtensionTask.new('botventure', spec)
+
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require 'botventure'
+  ARGV.clear
+  IRB.start
+end

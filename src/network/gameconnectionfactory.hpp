@@ -1,8 +1,14 @@
 #ifndef network_gameconnectionfactory_
 #define network_gameconnectionfactory_
 
-#include "../world/map2d.hpp"
 #include "gameconnection.hpp"
+
+#ifdef RAKE_COMPILATION
+#include "map2d.hpp"
+#else
+#include "world/map2d.hpp"
+#endif //RAKE_COMPILATION
+
 #include "Poco/Net/TCPServerConnection.h"
 #include "Poco/Net/TCPServerConnectionFactory.h"
 

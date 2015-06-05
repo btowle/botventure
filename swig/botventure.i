@@ -1,11 +1,21 @@
 %module botventure
 %{
+#ifdef RAKE_COMPILATION
+#include "robot.hpp"
+#include "gameserver.hpp"
+#include "map2d.hpp"
+#include "mob.hpp"
+#include "position.hpp"
+#include "gameconnection.hpp"
+#else
 #include "src/bot/robot.hpp"
 #include "src/network/messages.hpp"
 #include "src/network/gameserver.hpp"
 #include "src/world/map2d.hpp"
 #include "src/world/mob.hpp"
 #include "src/world/position.hpp"
+#endif //RAKE_COMPILATION
+
 using namespace Botventure;
 using namespace World;
 using namespace Bot;

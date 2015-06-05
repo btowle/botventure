@@ -1,7 +1,11 @@
 #ifndef world_map2d_
 #define world_map2d_
 
-#include "../network/messages.hpp"
+#ifdef RAKE_COMPILATION
+#include "messages.hpp"
+#else
+#include "network/messages.hpp"
+#endif //RAKE_COMPILATION
 #include "mob.hpp"
 #include "position.hpp"
 #include <string>

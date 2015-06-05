@@ -2,8 +2,15 @@
 #define network_messagewriter_
 
 #include "messages.hpp"
-#include "../world/map2d.hpp"
-#include "../world/mob.hpp"
+
+#ifdef RAKE_COMPILATION
+#include "map2d.hpp"
+#include "mob.hpp"
+#else
+#include "world/map2d.hpp"
+#include "world/mob.hpp"
+#endif //RAKE_COMPILATION
+
 #include "Poco/Net/SocketStream.h"
 
 namespace Botventure{

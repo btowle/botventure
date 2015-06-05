@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(Botventure)
 set(Botventure_VERSION_MAJOR 0)
 set(Botventure_VERSION_MINOR 1)
+set(Botventure_VERSION_PATCH 0)
 
 configure_file(
   "${PROJECT_SOURCE_DIR}/src/botventureconfig.h.in"
@@ -18,4 +19,5 @@ include_directories(${CMAKE_BINARY_DIR}/src/network/messages)
 
 add_subdirectory(swig)
 add_subdirectory(src)
-file(COPY data/maps DESTINATION "${CMAKE_BINARY_DIR}/data")
+add_subdirectory(rubygem)
+file(COPY data/maps DESTINATION "${CMAKE_BINARY_DIR}/bin/data")
