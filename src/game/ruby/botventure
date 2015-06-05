@@ -8,7 +8,7 @@ require 'botventure/botventure'
 server = Botventure::GameServer.new
 server.start
 
-require 'samplebot.rb' if ARGV.length == 0
+require 'bots/samplebot.rb' if ARGV.length == 0
 #require 'player.rb' if ARGV.length == 0
 require ARGV[0] if ARGV.length == 1
 

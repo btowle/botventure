@@ -1,1 +1,1 @@
-file(COPY samplebot.rb player.rb botventure DESTINATION "${CMAKE_BINARY_DIR}/bin/ruby")
+file(COPY bots botventure DESTINATION "${CMAKE_BINARY_DIR}/bin/ruby")
