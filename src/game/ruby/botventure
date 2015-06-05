@@ -17,12 +17,19 @@ player = Player.new
 bot = Botventure::Robot.new
 bot.connect
 
-while bot.is_connected? && bot.is_playing? do
-  break if server.disconnected?
+while bot.is_connected? && bot.is_playing? && !server.disconnected? do
+  current_turn = bot.turn
   player.do_turn(bot)
+  if bot.turn == current_turn then
+    puts "You must take exactly one action every turn. (Use bot.wait to do nothing.)"
+    break
+  end
+  if bot.turn > current_turn + 1 then
+    puts "You must take exactly one action every turn. (You performed #{bot.turn - current_turn}.)"
+    break
+  end
 end
 
-puts "Turn: #{bot.turn}"
 if bot.is_winner? then
   puts "You win!"
 else
