@@ -36,4 +36,5 @@ else
   puts "You lose!"
 end
 
+bot.disconnect
 server.stop

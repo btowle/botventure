@@ -4,6 +4,7 @@
 #include "messagewriter.hpp"
 #include <iostream>
 #include "Poco/Net/SocketStream.h"
+#include "Poco/ScopedLock.h"
 
 #include <stdlib.h>
 
@@ -18,13 +19,19 @@ void GameConnection::run(){
 
     //Simulate world here
 
-    while(mReader.GetNextMessage() &&
-          worldManager.GetGameState() == Messages::PLAYING){
+    while(mReader.GetNextMessage()){
+      Poco::ScopedLock<Poco::Mutex> lock(worldManagerMutex);
+      if(worldManager.GetGameState() != Messages::PLAYING){
+        break;
+      }
+
       HandleMessage();
       if(actedThisTurn){
         AdvanceTurn();
       }
     }
+
+    Poco::ScopedLock<Poco::Mutex> lock(worldManagerMutex);
     if(worldManager.GetGameState() == Messages::PLAYING){
       std::cout << "Client disconnected." << std::endl;
     }else{

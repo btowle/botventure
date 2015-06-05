@@ -4,7 +4,15 @@
 #include "defaults.hpp"
 #include "gameconnection.hpp"
 #include "gameconnectionfactory.hpp"
+
+#ifdef RAKE_COMPILATION
+#include "worldmanager.hpp"
+#else
+#include "world/worldmanager.hpp"
+#endif //RAKE_COMPILATION
+
 #include "Poco/Net/TCPServerParams.h"
+#include "Poco/Mutex.h"
 
 namespace Botventure{
 namespace Network{
@@ -17,6 +25,8 @@ public:
   bool Disconnected();
 private:
   Poco::Net::TCPServer server;
+  World::WorldManager worldManager;
+  Poco::Mutex worldManagerMutex;
 };
 
 }

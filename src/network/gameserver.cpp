@@ -6,7 +6,11 @@
 namespace Botventure{
 namespace Network{
 
-GameServer::GameServer() : server(new GameConnectionFactory<Network::GameConnection>(), Defaults::Port, new Poco::Net::TCPServerParams()){
+GameServer::GameServer() :
+  server(new GameConnectionFactory<Network::GameConnection>(worldManager,
+                                                            worldManagerMutex),
+  Defaults::Port,
+  new Poco::Net::TCPServerParams()){
 }
 
 void GameServer::Start(){

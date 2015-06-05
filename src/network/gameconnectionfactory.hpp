@@ -19,16 +19,15 @@ template <class T>
 class GameConnectionFactory : public Poco::Net::TCPServerConnectionFactory
 {
 public:
-	//GameConnectionFactory(World::Map2D& map) : map(map){}
-  GameConnectionFactory(){}
+  GameConnectionFactory(World::WorldManager& worldManager, Poco::Mutex& worldManagerMutex) : worldManager(worldManager), worldManagerMutex(worldManagerMutex) {}
 	~GameConnectionFactory(){}
 	Poco::Net::TCPServerConnection* createConnection(const Poco::Net::StreamSocket& socket)
 	{
-    return new T(socket);
-		//return new T(socket, map);
+    return new T(socket, worldManager, worldManagerMutex);
 	}
 private:
-	//World::Map2D& map;
+  World::WorldManager& worldManager;
+  Poco::Mutex& worldManagerMutex;
 };
 
 }
