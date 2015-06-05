@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.dirname(__FILE__) + "/../../lib/ruby")
 $LOAD_PATH.unshift(File.dirname(__FILE__) + "/../data")
 
-require 'botventure/botventure'
+require 'botventure'
 
 server = Botventure::GameServer.new
 server.start
