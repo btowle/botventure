@@ -4,7 +4,6 @@
 #include "messagewriter.hpp"
 #include <iostream>
 #include "Poco/Net/SocketStream.h"
-#include "Poco/ScopedLock.h"
 
 #include <stdlib.h>
 
@@ -15,12 +14,9 @@ void GameConnection::run(){
 	try
 	{
     Handshake();
-    InitGame();
-
-    //Simulate world here
 
     while(mReader.GetNextMessage()){
-      Poco::ScopedLock<Poco::Mutex> lock(worldManagerMutex);
+      ScopedLock lock(worldManagerMutex);
       if(worldManager.GetGameState() != Messages::PLAYING){
         break;
       }
@@ -31,7 +27,7 @@ void GameConnection::run(){
       }
     }
 
-    Poco::ScopedLock<Poco::Mutex> lock(worldManagerMutex);
+    ScopedLock lock(worldManagerMutex);
     if(worldManager.GetGameState() == Messages::PLAYING){
       std::cout << "Client disconnected." << std::endl;
     }else{
@@ -66,17 +62,16 @@ void GameConnection::Handshake(){
       mReader.CurrentMessage<Messages::Handshake>().step() != Messages::NEWGAME){
       throw std::runtime_error("Connection received without valid handshake.2");
     }
-    std::cout << "connection received, new game" << std::endl;
-}
-
-void GameConnection::InitGame(){
-    turnNumber = 0;
-    AdvanceTurn();
+    std::cout << "connection received" << std::endl;
+    ScopedLock lock(worldManagerMutex);
+    mWriter.SendGameInfo(worldManager.GetTurn(), worldManager.GetGameState());
+    std::cout << "game started" << std::endl;
 }
 
 void GameConnection::AdvanceTurn(){
     actedThisTurn = false;
-    mWriter.SendGameInfo(++turnNumber, worldManager.GetGameState());
+    worldManager.AdvanceTurn();
+    mWriter.SendGameInfo(worldManager.GetTurn(), worldManager.GetGameState());
 }
 
 void GameConnection::HandleMessage(){
@@ -108,7 +103,6 @@ void GameConnection::HandleSensorRequest(){
       //mWriter.SendSensorResponse();
       break;
     case Messages::GPS:
-      std::cout << "Handling GPS Request" << std::endl << std::flush;
       mWriter.SendSensorResponse(worldManager.GetMap(), worldManager.GetEnemies(), worldManager.GetPlayer());
       break;
   }
@@ -123,7 +117,6 @@ void GameConnection::HandleActionRequest(){
   Messages::ActionRequest msg = mReader.CurrentMessage<Messages::ActionRequest>();
   switch(msg.action_type()){
     case Messages::MOVE:
-      std::cout << "Handling Move Request" << std::endl << std::flush;
       mWriter.SendActionResponse(worldManager.MovePlayer(msg.direction()));
       break;
     case Messages::ATTACK:

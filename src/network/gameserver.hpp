@@ -17,12 +17,16 @@
 namespace Botventure{
 namespace Network{
 
+typedef Poco::ScopedLock<Poco::Mutex> ScopedLock;
+
 class GameServer{
 public:
   GameServer();
   void Start();
   void Stop();
   bool Disconnected();
+
+  GameServer& LogLevel(int logLevel);
 private:
   Poco::Net::TCPServer server;
   World::WorldManager worldManager;

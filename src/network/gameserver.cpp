@@ -25,5 +25,11 @@ bool GameServer::Disconnected(){
   return server.currentConnections() == 0;
 }
 
+GameServer& GameServer::LogLevel(int logLevel){
+  ScopedLock lock(worldManagerMutex);
+  worldManager.logLevel = logLevel;
+  return *this;
+}
+
 }
 }

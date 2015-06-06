@@ -8,12 +8,10 @@ namespace World{
 
   WorldManager::WorldManager(){
     try{
-      map.Load("../data/maps/default.map");
-      for(Position p : map.enemySpawns){
-        enemies.push_back(Mob(p));
+      InitWorld();
+      if(logLevel > 2){
+        std::cout << "World Started" << std::endl;
       }
-      player = Mob(map.playerSpawn);
-      gameState = Messages::PLAYING;
     }
     catch(std::exception const& e)
     {
@@ -22,14 +20,23 @@ namespace World{
   }
 
   const Map2D& WorldManager::GetMap() const{
+    if(logLevel > 1){
+      std::cout << "Player looks around at the world" << std::endl;
+    }
     return map;
   }
 
   const std::vector<Mob>& WorldManager::GetEnemies() const{
+    if(logLevel > 1){
+      std::cout << "Player looks for danger" << std::endl;
+    }
     return enemies;
   }
 
   const Mob& WorldManager::GetPlayer() const{
+    if(logLevel > 1){
+      std::cout << "Player takes personal status" << std::endl;
+    }
     return player;
   }
 
@@ -49,6 +56,9 @@ namespace World{
        player.IsWalkable(map.GetNode(player.position + offset))){
       for(Mob enemy : enemies){
         if(enemy.position == player.position){
+          if(logLevel > 1){
+            std::cout << "Player move blocked by enemy." << std::endl;
+          }
           return false;
         }
       }
@@ -56,9 +66,42 @@ namespace World{
       if(map.GetNode(player.position) == Messages::GOAL){
         gameState = Messages::SUCCESS;
       }
+      if(logLevel > 1){
+        std::cout << "Player moved to " << player.position.ToString() << std::endl;
+      }
       return true;
     }
+    if(logLevel > 1){
+        std::cout << "Player movement blocked" << std::endl;
+    }
     return false;
+  }
+
+  void WorldManager::AdvanceTurn(){
+    ++turnNumber;
+    SimulateWorld();
+    OutputState();
+  }
+
+  void WorldManager::InitWorld(){
+    map.Load("../data/maps/default.map");
+    for(Position p : map.enemySpawns){
+      enemies.push_back(Mob(p));
+    }
+    player = Mob(map.playerSpawn);
+    gameState = Messages::PLAYING;
+    OutputState();
+  }
+
+  void WorldManager::SimulateWorld(){
+
+  }
+
+  void WorldManager::OutputState(){
+    if(logLevel > 0){
+      std::cout << "Turn: " << turnNumber << std::endl;
+      std::cout << map.ToString(enemies, player) << std::endl;
+    }
   }
 }
 }

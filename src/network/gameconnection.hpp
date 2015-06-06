@@ -18,6 +18,8 @@
 namespace Botventure{
 namespace Network{
 
+typedef Poco::ScopedLock<Poco::Mutex> ScopedLock;
+
 class GameConnection : public Poco::Net::TCPServerConnection
 {
 public:

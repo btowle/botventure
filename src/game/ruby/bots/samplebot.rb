@@ -11,9 +11,6 @@ def do_turn(bot)
 
   get_world_info
 
-  #Print the map with enemies and player position
-  puts @map.to_string(@enemies, @player)
-
   decide_direction
 
   bot.move! @direction

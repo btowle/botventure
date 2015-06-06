@@ -26,14 +26,24 @@ public:
   bool MovePlayer(Messages::Direction direction);
   Messages::GameState GetGameState(){ return gameState; }
 
+  int GetTurn(){ return turnNumber; }
+  void AdvanceTurn();
+
+  int logLevel = 0;
+
 private:
   bool MovePlayer(Position offset);
+
+  void InitWorld();
+  void SimulateWorld();
+
+  void OutputState();
 
   Map2D map;
   std::vector<Mob> enemies;
   Mob player;
   Messages::GameState gameState;
-
+  int turnNumber = 0;
 };
 
 

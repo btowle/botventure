@@ -82,9 +82,13 @@ namespace std {
 %rename("enemies") GetEnemies();
 %rename("player") GetPlayer();
 %bang Move(Direction direction);
+%bang Connect();
+%bang Disconnect();
 %include "src/bot/robot.hpp"
 
 %import "src/network/gameconnection.hpp"
 
 %predicate Disconnected();
+%bang Start();
+%bang Stop();
 %include "src/network/gameserver.hpp"

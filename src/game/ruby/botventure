@@ -4,18 +4,66 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + "/../../lib/ruby")
 $LOAD_PATH.unshift(File.dirname(__FILE__) + "/../data")
 
 require 'botventure'
+require 'fileutils'
+require 'optparse'
+require 'ostruct'
+
+options = {}
+OptionParser.new do |opts|
+  options = OpenStruct.new
+  options.bot_file = "player.rb"
+  options.log_level = 2
+  options.init = false
+
+  opts.banner = "Usage: botventure [options]"
+
+  opts.on("-b", "--bot FILE",
+          "Use the specified file instead of player.rb.") do |file|
+    options.bot_file = file;
+  end
+
+  opts.on("-l", "--log-level N", "Set the amount of output from the game.",
+                                  " 0: Nothing...",
+                                  " 1: and TurnNumber and Map...",
+                                  " 2: and Actions... (default)",
+                                  " 3: and everything else.") do |n|
+    options.log_level = n;
+  end
+
+  opts.on("-i", "--init", "Create a new player in current directory.") do |init|
+    options.init = init
+  end
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+end.parse!
+
+if options.init then
+  if File.file? "./player.rb" then
+    puts "player.rb already exists."
+    exit
+  end
+  puts "Create new player..."
+  FileUtils.cp("./bots/player.rb", "./player.rb")
+  puts "Edit player.rb and re-run to play!"
+  exit
+end
+
+if !File.file? options.bot_file then
+  puts "No player.rb found. Did you forget to init? ('botventure --init')"
+  exit
+end
+require options.bot_file
 
 server = Botventure::GameServer.new
-server.start
-
-require 'bots/samplebot.rb' if ARGV.length == 0
-#require 'player.rb' if ARGV.length == 0
-require ARGV[0] if ARGV.length == 1
+server.log_level(options.log_level).start!
 
 player = Player.new
 
 bot = Botventure::Robot.new
-bot.connect
+bot.connect!
 
 while bot.is_connected? && bot.is_playing? && !server.disconnected? do
   current_turn = bot.turn
@@ -36,5 +84,5 @@ else
   puts "You lose!"
 end
 
-bot.disconnect
-server.stop
+bot.disconnect!
+server.stop!
