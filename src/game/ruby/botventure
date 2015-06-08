@@ -14,7 +14,7 @@ OptionParser.new do |opts|
   options.bot_file = "./player.rb"
   options.log_level = 2
   options.turn_limit = 1000
-  options.turn_delay = 0.5
+  options.turn_delay = -1
   options.init = false
 
   opts.banner = "Usage: botventure [options]"
@@ -24,7 +24,8 @@ OptionParser.new do |opts|
     options.bot_file = file;
   end
 
-  opts.on("-l", "--log-level N", "Set the amount of output from the game.",
+  opts.on("-l", "--log-level N", Integer,
+                                  "Set the amount of output from the game.",
                                   " 0: Nothing...",
                                   " 1: and TurnNumber and Map...",
                                   " 2: and Actions... (default)",
@@ -32,8 +33,12 @@ OptionParser.new do |opts|
     options.log_level = n;
   end
 
-  opts.on("-t", "--turn-limit T", "Set the turn limit") do |t|
+  opts.on("-t", "--turn-limit T", Integer, "Set the turn limit") do |t|
     options.turn_limit = t;
+  end
+
+  opts.on("-d", "--turn-delay D", Float, "Set the turn limit") do |d|
+    options.turn_delay = d;
   end
 
   opts.on("-i", "--init", "Create a new player in current directory.") do |init|
@@ -84,7 +89,7 @@ while bot.is_connected? && bot.is_playing? && !server.disconnected? do
     puts "You must take exactly one action every turn. (You performed #{bot.turn - current_turn}.)"
     break
   end
-  sleep options.turn_delay
+  sleep options.turn_delay unless options.turn_delay <= 0
 end
 
 if bot.is_winner? then
