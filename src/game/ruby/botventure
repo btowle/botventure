@@ -14,6 +14,7 @@ OptionParser.new do |opts|
   options.bot_file = "./player.rb"
   options.log_level = 2
   options.turn_limit = 1000
+  options.turn_delay = 0.5
   options.init = false
 
   opts.banner = "Usage: botventure [options]"
@@ -83,6 +84,7 @@ while bot.is_connected? && bot.is_playing? && !server.disconnected? do
     puts "You must take exactly one action every turn. (You performed #{bot.turn - current_turn}.)"
     break
   end
+  sleep options.turn_delay
 end
 
 if bot.is_winner? then
