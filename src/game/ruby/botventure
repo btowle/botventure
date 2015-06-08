@@ -13,6 +13,7 @@ OptionParser.new do |opts|
   options = OpenStruct.new
   options.bot_file = "./player.rb"
   options.log_level = 2
+  options.turn_limit = 1000
   options.init = false
 
   opts.banner = "Usage: botventure [options]"
@@ -28,6 +29,10 @@ OptionParser.new do |opts|
                                   " 2: and Actions... (default)",
                                   " 3: and everything else.") do |n|
     options.log_level = n;
+  end
+
+  opts.on("-t", "--turn-limit T", "Set the turn limit") do |t|
+    options.turn_limit = t;
   end
 
   opts.on("-i", "--init", "Create a new player in current directory.") do |init|
@@ -59,7 +64,8 @@ end
 require options.bot_file
 
 server = Botventure::GameServer.new
-server.log_level(options.log_level).start!
+server.log_level(options.log_level)
+      .turn_limit(options.turn_limit).start!
 
 player = Player.new
 

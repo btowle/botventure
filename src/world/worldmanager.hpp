@@ -30,6 +30,7 @@ public:
   void AdvanceTurn();
 
   int logLevel = 0;
+  int turnLimit = -1;
 
 private:
   bool MovePlayer(Position offset);

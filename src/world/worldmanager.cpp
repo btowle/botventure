@@ -81,6 +81,9 @@ namespace World{
     ++turnNumber;
     SimulateWorld();
     OutputState();
+    if(turnLimit > 0 && turnNumber > turnLimit){
+      gameState = Messages::FAILURE;
+    }
   }
 
   void WorldManager::InitWorld(){

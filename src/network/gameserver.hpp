@@ -27,6 +27,7 @@ public:
   bool Disconnected();
 
   GameServer& LogLevel(int logLevel);
+  GameServer& TurnLimit(int turnLimit);
 private:
   Poco::Net::TCPServer server;
   World::WorldManager worldManager;

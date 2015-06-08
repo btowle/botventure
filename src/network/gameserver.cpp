@@ -31,5 +31,11 @@ GameServer& GameServer::LogLevel(int logLevel){
   return *this;
 }
 
+GameServer& GameServer::TurnLimit(int turnLimit){
+  ScopedLock lock(worldManagerMutex);
+  worldManager.turnLimit = turnLimit;
+  return *this;
+}
+
 }
 }
