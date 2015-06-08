@@ -84,7 +84,7 @@ namespace World{
   }
 
   void WorldManager::InitWorld(){
-    map.Load("../data/maps/default.map");
+    map.Load("default.map");
     for(Position p : map.enemySpawns){
       enemies.push_back(Mob(p));
     }

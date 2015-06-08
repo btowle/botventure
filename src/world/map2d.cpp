@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <map>
+#include "Poco/File.h"
 
 namespace Botventure{
 namespace World{
@@ -16,10 +17,18 @@ namespace World{
 	}
 
   void Map2D::Load(const std::string fileName){
+    std::string fullFileName;
+    if(Poco::File("../data/maps/" + fileName).exists()){
+      fullFileName = "../data/maps/" + fileName;
+    }else if(Poco::File("./data/maps/" + fileName).exists()){
+      fullFileName = "./data/maps/" + fileName;
+    }else{
+      fullFileName = fileName;
+    }
     std::string line;
     int maxLength = 0;
     std::vector<std::string> lines;
-    std::ifstream mapFile(fileName);
+    std::ifstream mapFile(fullFileName);
     if(mapFile.is_open())
     {
       while(getline(mapFile, line)){

@@ -46,7 +46,8 @@ if options.init then
     exit
   end
   puts "Create new player..."
-  FileUtils.cp(File.dirname(__FILE__) + "/../data/bots/player.rb", "./player.rb")
+  FileUtils.cp_r(File.dirname(__FILE__) + "/../data", ".")
+  FileUtils.cp("./data/bots/player.rb", "./player.rb")
   puts "Edit player.rb and re-run to play!"
   exit
 end
