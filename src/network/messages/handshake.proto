@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package Botventure.Messages;
 
@@ -9,5 +9,5 @@ enum Step{
 }
 
 message Handshake {
-  Step step = 1;
+  optional Step step = 1;
 }

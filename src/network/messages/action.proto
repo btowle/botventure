@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package Botventure.Messages;
 
@@ -18,10 +18,10 @@ enum Direction
 }
 
 message ActionRequest {
-  ActionType action_type = 1;
-  Direction direction = 2;
+  optional ActionType action_type = 1;
+  optional Direction direction = 2;
 }
 
 message ActionResponse {
-  bool result = 1;
+  optional bool result = 1;
 }

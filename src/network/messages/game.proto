@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package Botventure.Messages;
 
@@ -9,6 +9,6 @@ enum GameState{
 }
 
 message GameInfo{
-  int32 turn_number = 1;
-  GameState game_state = 2;
+  optional int32 turn_number = 1;
+  optional GameState game_state = 2;
 }

@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 import "action.proto";
 import "game.proto";
@@ -19,7 +19,7 @@ enum MessageType
 }
 
 message Header {
-	MessageType message_type = 1;
+	optional MessageType message_type = 1;
 
   oneof message_oneof {
     ActionRequest action_request = 16;
