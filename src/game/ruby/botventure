@@ -11,7 +11,7 @@ require 'ostruct'
 options = {}
 OptionParser.new do |opts|
   options = OpenStruct.new
-  options.bot_file = "player.rb"
+  options.bot_file = "./player.rb"
   options.log_level = 2
   options.init = false
 
@@ -46,7 +46,7 @@ if options.init then
     exit
   end
   puts "Create new player..."
-  FileUtils.cp("./bots/player.rb", "./player.rb")
+  FileUtils.cp(File.dirname(__FILE__) + "/../data/bots/player.rb", "./player.rb")
   puts "Edit player.rb and re-run to play!"
   exit
 end
