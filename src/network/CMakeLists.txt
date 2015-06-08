@@ -3,4 +3,3 @@ add_library(network STATIC messagereader.cpp messagewriter.cpp messages.hpp defa
 SET_TARGET_PROPERTIES(network PROPERTIES COMPILE_FLAGS "-fPIC")
 add_dependencies(network messages world)
 target_link_libraries(network messages world)
-target_compile_features(network PUBLIC cxx_range_for)
