@@ -21,13 +21,11 @@ enum MessageType
 message Header {
 	optional MessageType message_type = 1;
 
-  oneof message_oneof {
-    ActionRequest action_request = 16;
-    ActionResponse action_response = 17;
-    GameInfo game_info = 18;
-    Handshake handshake = 19;
-    SensorRequest sensor_request = 20;
-    SensorResponse sensor_response = 21;
-    string error_message = 22;
-  }
+  optional ActionRequest action_request = 16;
+  optional ActionResponse action_response = 17;
+  optional GameInfo game_info = 18;
+  optional Handshake handshake = 19;
+  optional SensorRequest sensor_request = 20;
+  optional SensorResponse sensor_response = 21;
+  optional string error_message = 22;
 }
