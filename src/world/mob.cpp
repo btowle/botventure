@@ -34,6 +34,10 @@ Mob& Mob::SetName(std::string name){
   this->name = name;
   return *this;
 }
+Mob& Mob::SetSymbol(char character){
+  this->symbol = character;
+  return *this;
+}
 
 
 }

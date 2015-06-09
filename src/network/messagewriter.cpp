@@ -78,6 +78,7 @@ namespace Network{
       enemy.set_x(mob.position.x);
       enemy.set_y(mob.position.y);
       enemy.set_name(mob.name);
+      enemy.set_symbol(mob.symbol);
       sensorResponse.add_enemies()->CopyFrom(enemy);
     }
 

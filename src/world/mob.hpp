@@ -20,6 +20,7 @@ public:
                         armorClass(mob.armorClass),
                         attackStrength(mob.attackStrength),
                         name(mob.name),
+                        symbol(mob.symbol),
                         alive(mob.alive){}
   Mob() : position(Position()){};
 
@@ -32,6 +33,7 @@ public:
   int attackStrength = 1;
 
   std::string name = "Mob";
+  std::string symbol = "m";
 
   bool alive = true;
 
@@ -40,6 +42,7 @@ public:
   Mob& SetArmorClass(int armorClass);
   Mob& SetAttackStrength(int attackStrength);
   Mob& SetName(std::string name);
+  Mob& SetSymbol(char character);
 private:
 
 };

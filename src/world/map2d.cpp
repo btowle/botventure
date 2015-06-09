@@ -81,10 +81,10 @@ namespace World{
                                 return m.position == Position(x,y);
                               });
         if(player.position == Position(x,y)){
-          ss << '@';
+          ss << player.symbol;
         }else if(it != enemies.end()){
           if((*it).alive){
-            ss << '&';
+            ss << (*it).symbol;
           }else{
             ss << '.';
           }
@@ -132,8 +132,6 @@ namespace World{
     static std::map<char, Messages::NodeType> map;
     if(map.empty()){
       map[' '] = Messages::GROUND;
-      map['@'] = Messages::GROUND;
-      map['&'] = Messages::GROUND;
       map['X'] = Messages::WALL;
       map['?'] = Messages::UNKNOWN;
       map['G'] = Messages::GOAL;
@@ -141,7 +139,7 @@ namespace World{
     if(map.count(c)){
       return map[c];
     }
-    return Messages::WALL;
+    return Messages::GROUND;
   }
 
   char Map2D::TerrainToChar(const Terrain& t){

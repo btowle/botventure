@@ -158,14 +158,16 @@ namespace World{
                         .SetHealth(2)
                         .SetArmorClass(5)
                         .SetAttackStrength(1)
-                        .SetName("Goblin"));
+                        .SetName("Goblin")
+                        .SetSymbol('g'));
     }
     player = Mob()
               .SetPosition(map.playerSpawn)
               .SetHealth(10)
               .SetArmorClass(10)
               .SetAttackStrength(1)
-              .SetName("Player");
+              .SetName("Player")
+              .SetSymbol('@');
     gameState = Messages::PLAYING;
     OutputState();
   }

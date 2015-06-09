@@ -103,12 +103,14 @@ bool Robot::RequestMap(){
   for(int i=0; i<msg.enemies_size(); ++i){
     Messages::Enemy e = msg.enemies(i);
     enemies.push_back(World::Mob()
-                        .SetPosition(World::Position(e.x(), e.y())));
+                        .SetPosition(World::Position(e.x(), e.y()))
+                        .SetSymbol(e.symbol()[0]));
   }
 
   playerTurn = currentTurn;
   Messages::BotStatus b = msg.bot_status();
-  player = World::Mob().SetPosition(World::Position(b.x(), b.y()));
+  player = World::Mob().SetPosition(World::Position(b.x(), b.y()))
+                        .SetSymbol('@');
 }
 
 bool Robot::GetNextTurn(){
