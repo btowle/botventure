@@ -60,6 +60,7 @@ namespace std {
 %rename("to_s") ToString() const;
 %include "src/world/position.hpp"
 
+%predicate IsAlive() const;
 %predicate IsWalkable(Messages::NodeType t) const;
 %include "src/world/mob.hpp"
 
@@ -72,6 +73,7 @@ namespace std {
 %rename("node") GetNode(int x, int y) const;
 %rename("node") GetNode(Position p) const;
 %predicate IsInBounds(Position p) const;
+%rename("index_to_position") IndexToPosition(int index) const;
 %include "src/world/map2d.hpp"
 
 %predicate IsPlaying();

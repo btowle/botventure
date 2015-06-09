@@ -1,0 +1,15 @@
+  XXXXXX   |  Legend:
+  XG   X   |  @    Your Bot
+  X    X   |  G    The Goal
+  X    X   |  X    Walls
+  X  @ X
+  X    X
+  XXXXXX
+
+The Goal and start location have been switched.
+This should only require minor changes.
+
+New Methods:
+
+New Constants:
+

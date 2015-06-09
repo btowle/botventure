@@ -24,6 +24,7 @@ public:
                         alive(mob.alive){}
   Mob() : position(Position()){};
 
+  bool IsAlive() const;
   virtual bool IsWalkable(Messages::NodeType t) const;
 
   Position position;
@@ -37,6 +38,7 @@ public:
 
   bool alive = true;
 
+  Mob& SetAlive(bool alive);
   Mob& SetPosition(World::Position position);
   Mob& SetHealth(int health);
   Mob& SetArmorClass(int armorClass);

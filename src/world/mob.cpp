@@ -4,6 +4,10 @@
 namespace Botventure{
 namespace World{
 
+bool Mob::IsAlive() const{
+  return alive;
+}
+
 bool Mob::IsWalkable(Messages::NodeType t) const{
   static std::vector<Messages::NodeType> walkable;
   if(walkable.empty()){
@@ -12,6 +16,11 @@ bool Mob::IsWalkable(Messages::NodeType t) const{
   }
   auto iterator = find(walkable.begin(), walkable.end(), t);
   return iterator != walkable.end();
+}
+
+Mob& Mob::SetAlive(bool alive){
+  this->alive = alive;
+  return *this;
 }
 
 Mob& Mob::SetPosition(World::Position position){

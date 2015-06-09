@@ -1,0 +1,31 @@
+COMBAT!
+
+XXXXXXXXXX
+X@  g  G X
+XXXXXXXXXX
+
+Legend:
+  @   Your Bot
+  G   The Goal
+  X   Walls
+  &   A Goblin
+
+Now there is a goblin between the start and the goal. The bot can not move through
+enemies unless they have been killed.
+
+You can use Bot#enemies to get an array of Mob objects. You can get the position
+  of each Mob with Mob#position and detect if they are alive with Mob#is_alive?.
+
+If you are adjacent to a Mob, you can attack it with Bot#attack!(direction).
+
+Remember!
+  -Only 1 action can be called from do_turn each time it is called.
+  -The bot can move through Mobs if they are not alive.
+
+New Methods:
+  Bot#enemies
+  Bot#attack!(direction)
+
+  Mob#is_alive?
+
+New Constants:

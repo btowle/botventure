@@ -1,0 +1,61 @@
+This map is slightly more intersting:
+  XXXXXX   |  Legend:
+  X@   X   |  @    Your Bot
+  X    X   |  G    The Goal
+  X    X   |  X    Walls
+  X  G X
+  X    X
+  XXXXXX
+
+The goal has been moved and is no longer in a straight line from the bot. While you
+  could write a script to make the bot move a set number of spaces right and down,
+  you should assume you won't always see the maps your bot will play.
+
+The bot has sensors that provide information about the world.
+  Bot#map returns map information in a Map object
+  Bot#player returns player information in a Mob object
+
+Using the Map, you can locate the goal.
+  Map#node(x, y) and Map#node(position) return the type of terrain at the node.
+    The goal node is equal to Botventure::GOAL.
+
+  You can also use Map#nodes, which returns a flat array of all the nodes, to find
+    the goal.
+  Note:
+    If you choose to iterate through the flat array of nodes,
+    use Map#index_to_position(index) to get the position.
+
+You can get the player position using Mob#position.
+
+Once you have both positions, you can decide which direction to move.
+   Position#x and Position#y give access to the x and y components of the position.
+   Position#+ and Position#- perform component-wise addition and subtraction of
+                                two positions.
+   Position#== compares two positions.
+
+Remember!
+  -Only 1 action can be called from do_turn each time it is called.
+  -The goal is stationary, you can store its location instead of finding it
+    every turn.
+
+New Methods:
+  Bot#map
+  Bot#player
+
+  Map#node(x,y)
+  Map#node(position)
+  Map#nodes
+  Map#index_to_position(index)
+
+  Mob#position
+
+  Position#==
+  Position#x
+  Position#y
+  Position#-
+  Position#+
+
+New Constants:
+  Botventure::GROUND
+  Botventure::WALL
+  Botventure::GOAL

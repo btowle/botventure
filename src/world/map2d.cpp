@@ -128,6 +128,10 @@ namespace World{
 		return y*width + x;
 	}
 
+  Position Map2D::IndexToPosition(int index) const{
+    return Position(index%width, index/width);
+  }
+
   Terrain Map2D::CharToTerrain(const char& c){
     static std::map<char, Messages::NodeType> map;
     if(map.empty()){

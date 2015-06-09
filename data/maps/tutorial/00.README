@@ -1,0 +1,30 @@
+Welcome to Botventure!
+
+To win, get your bot to the Goal.
+
+The first map is simple:
+  XXXXXX   |  Legend:
+  X@  GX   |  @    Your Bot
+  XXXXXX   |  G    The Goal
+           |  X    Walls
+
+It is your bot, with the goal 2 spaces to the right surrounded by walls.
+
+To play, add code to player.rb and then run `botventure`.
+
+Every game turn, Player#do_turn is called.
+do_turn must call exactly one action method on the bot every turn.
+Action methods end with a bang(!).
+
+To win this level, replace 'bot.wait!' with 'bot.move! Boventure::Right'
+Note: Even though the Goal is 3 spaces away, you only need one 'move!' call, since
+        do_turn is called in a loop by botventure.
+
+New Methods:
+  Bot#move!(direction)
+    Command the bot to move in the direction on this turn.
+New Constants:
+  Botventure::Right
+  Botventure::Down
+  Botventure::Left
+  Botventure::Up

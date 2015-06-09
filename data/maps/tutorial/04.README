@@ -1,0 +1,19 @@
+PATHFINDING!
+
+XXXXXXXXXXX
+X@X    X  X
+X X X  X  X
+X X XX    X
+X X XXXXX X
+X X X G X X
+X   X     X
+XXXXXXXXXXX
+
+Sometimes walls will block your path. Unlike enemies you can't attack through
+  walls, you have to navigate around them. Mob#is_walkable?(node) can be used
+  to see if you can walk over a node.
+
+New Methods:
+  Mob#is_walkable?(node)
+
+New Constants:

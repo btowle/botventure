@@ -104,7 +104,8 @@ bool Robot::RequestMap(){
     Messages::Enemy e = msg.enemies(i);
     enemies.push_back(World::Mob()
                         .SetPosition(World::Position(e.x(), e.y()))
-                        .SetSymbol(e.symbol()[0]));
+                        .SetSymbol(e.symbol()[0])
+                        .SetAlive(e.alive()));
   }
 
   playerTurn = currentTurn;
