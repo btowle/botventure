@@ -80,10 +80,14 @@ namespace World{
                               [x, y](const Mob& m)->bool{
                                 return m.position == Position(x,y);
                               });
-        if(it != enemies.end()){
-          ss << '&';
-        }else if(player.position == Position(x,y)){
+        if(player.position == Position(x,y)){
           ss << '@';
+        }else if(it != enemies.end()){
+          if((*it).alive){
+            ss << '&';
+          }else{
+            ss << '.';
+          }
         }else{
           Terrain t = GetNode(x,y);
           ss << TerrainToChar(t);

@@ -74,9 +74,10 @@ namespace Network{
 
     sensorResponse.clear_enemies();
     for(World::Mob mob : enemies){
-      enemy.set_health(mob.health);
+      enemy.set_alive(mob.alive);
       enemy.set_x(mob.position.x);
       enemy.set_y(mob.position.y);
+      enemy.set_name(mob.name);
       sensorResponse.add_enemies()->CopyFrom(enemy);
     }
 

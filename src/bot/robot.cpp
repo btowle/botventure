@@ -58,8 +58,18 @@ World::Mob Robot::GetPlayer(){
 }
 
 bool Robot::Move(Direction direction){
+  return DoAction(Messages::MOVE, direction);
+}
+bool Robot::Attack(Direction direction){
+  return DoAction(Messages::ATTACK, direction);
+}
+bool Robot::Wait(){
+  return DoAction(Messages::ATTACK, Messages::NODIRECTION);
+}
+
+bool Robot::DoAction(Messages::ActionType actionType, Direction direction){
   if(!connected){ return false; }
-  mWriter.SendActionRequest(Messages::MOVE, direction);
+  mWriter.SendActionRequest(actionType, direction);
   if(!mReader.GetNextMessage() ||
   mReader.CurrentMessageType() != Messages::ACTIONRESPONSE){
     connected = false;
@@ -92,12 +102,13 @@ bool Robot::RequestMap(){
   enemies.clear();
   for(int i=0; i<msg.enemies_size(); ++i){
     Messages::Enemy e = msg.enemies(i);
-    enemies.push_back(World::Mob(World::Position(e.x(), e.y()), e.health()));
+    enemies.push_back(World::Mob()
+                        .SetPosition(World::Position(e.x(), e.y())));
   }
 
   playerTurn = currentTurn;
   Messages::BotStatus b = msg.bot_status();
-  player = World::Mob(World::Position(b.x(), b.y()), b.health());
+  player = World::Mob().SetPosition(World::Position(b.x(), b.y()));
 }
 
 bool Robot::GetNextTurn(){

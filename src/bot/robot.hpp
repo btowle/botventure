@@ -46,8 +46,12 @@ public:
   World::Mob GetPlayer();
   
   bool Move(Direction direction);
+  bool Attack(Direction direction);
+  bool Wait();
   
 private:
+  bool DoAction(Messages::ActionType actionType, Direction direction);
+
   bool RequestMap();
   bool GetNextTurn();
 

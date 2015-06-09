@@ -7,8 +7,10 @@
 
 #ifdef RAKE_COMPILATION
 #include "messages.hpp"
+#include "roll.hpp"
 #else
 #include "network/messages.hpp"
+#include "roll/roll.hpp"
 #endif //RAKE_COMPILATION
 
 #include <vector>
@@ -24,6 +26,9 @@ public:
   const Mob& GetPlayer() const;
 
   bool MovePlayer(Messages::Direction direction);
+  bool Attack(Messages::Direction direction);
+  bool Attack(Mob& attacker, Messages::Direction direction);
+  bool Attack(Mob& attacker, Position position);
   Messages::GameState GetGameState(){ return gameState; }
 
   int GetTurn(){ return turnNumber; }
@@ -34,6 +39,10 @@ public:
 
 private:
   bool MovePlayer(Position offset);
+  bool Attack(Mob& attacker, Mob& defender);
+
+  Position DirectionOffset(Messages::Direction direction);
+  Position AdjacentPosition(Position position, Messages::Direction direction);
 
   void InitWorld();
   void SimulateWorld();

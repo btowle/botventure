@@ -1,7 +1,7 @@
 set(SERVER_INCLUDES server.cpp)
 set(CLIENT_INCLUDES client.cpp)
 set(EXTERNAL_LIBRARIES PocoFoundation PocoNet protobuf)
-set(LIBRARIES world network messages bot)
+set(LIBRARIES world network messages bot roll)
 
 add_executable(botventure-client ${CLIENT_INCLUDES})
 add_dependencies(botventure-client ${LIBRARIES})

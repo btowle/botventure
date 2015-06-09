@@ -6,6 +6,7 @@ configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Rakefile.in"
   "${CMAKE_CURRENT_BINARY_DIR}/Rakefile"
 )
+set(ROLLDIR ${PROJECT_SOURCE_DIR}/src/roll)
 set(BOTDIR ${PROJECT_SOURCE_DIR}/src/bot)
 set(NETDIR ${PROJECT_SOURCE_DIR}/src/network)
 set(WORLDDIR ${PROJECT_SOURCE_DIR}/src/world)
@@ -19,6 +20,7 @@ file(COPY ${PROJECT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${PROJECT_SOURCE_DIR}/src/game/ruby/bots DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data)
 
 #Glob all sources needed
+file(GLOB ROLLSOURCES ${ROLLDIR}/*.hpp ${ROLLDIR}/*.cpp)
 file(GLOB BOTSOURCES ${BOTDIR}/*.hpp ${BOTDIR}/*.cpp)
 file(GLOB NETSOURCES ${NETDIR}/*.hpp ${NETDIR}/*.cpp)
 file(GLOB WORLDSOURCES ${WORLDDIR}/*.hpp ${WORLDDIR}/*.cpp)
@@ -47,7 +49,7 @@ add_custom_command(TARGET rubygem
   COMMAND ${CMAKE_COMMAND} -E
     copy ${CMAKE_BINARY_DIR}/swig/botventureRUBY_wrap.cxx ${BOTVENTURE_DIR}/botventure.cpp)
 
-foreach(S IN LISTS MESSAGESOURCES BOTSOURCES NETSOURCES WORLDSOURCES)
+foreach(S IN LISTS MESSAGESOURCES BOTSOURCES NETSOURCES WORLDSOURCES ROLLSOURCES)
 add_custom_command(TARGET rubygem
   COMMAND ${CMAKE_COMMAND} -E
     copy ${S} ${BOTVENTURE_DIR})

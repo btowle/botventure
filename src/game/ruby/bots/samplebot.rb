@@ -3,23 +3,35 @@ class Player
 def do_turn(bot)
   @bot = bot
 
-  #Quit if we've run for longer than 25 turns
-  if bot.turn > 25 then
-    puts "I'm tired, goodnight. zzzz"
-    exit
-  end
-
   get_world_info
+
+  decide_action
 
   decide_direction
 
-  bot.move! @direction
+  bot.move! @direction if @action == Botventure::MOVE
+  bot.attack! @direction if @action == Botventure::ATTACK
+  bot.wait! if @action == Botventure::WAIT
 end
 
 def get_world_info
   @map = @bot.map
   @enemies = @bot.enemies
   @player = @bot.player
+end
+
+def decide_action
+  @action ||= Botventure::MOVE
+  @attack_count ||= 0
+
+  if @bot.turn == 1 then
+    @action = Botventure::MOVE
+  elsif @attack_count == 10 then
+    @action = Botventure::MOVE
+  else
+    @attack_count = @attack_count + 1
+    @action = Botventure::ATTACK
+  end
 end
 
 def decide_direction

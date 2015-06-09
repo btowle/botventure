@@ -14,6 +14,27 @@ bool Mob::IsWalkable(Messages::NodeType t) const{
   return iterator != walkable.end();
 }
 
+Mob& Mob::SetPosition(World::Position position){
+  this->position = position;
+  return *this;
+}
+Mob& Mob::SetHealth(int health){
+  this->health = health;
+  return *this;
+}
+Mob& Mob::SetArmorClass(int armorClass){
+  this->armorClass = armorClass;
+  return *this;
+}
+Mob& Mob::SetAttackStrength(int attackStrength){
+  this->attackStrength = attackStrength;
+  return *this;
+}
+Mob& Mob::SetName(std::string name){
+  this->name = name;
+  return *this;
+}
+
 
 }
 }

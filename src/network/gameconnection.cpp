@@ -120,7 +120,7 @@ void GameConnection::HandleActionRequest(){
       mWriter.SendActionResponse(worldManager.MovePlayer(msg.direction()));
       break;
     case Messages::ATTACK:
-      mWriter.SendActionResponse(false);
+      mWriter.SendActionResponse(worldManager.Attack(msg.direction()));
       break;
     case Messages::WAIT:
       mWriter.SendActionResponse(true);

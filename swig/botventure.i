@@ -82,6 +82,8 @@ namespace std {
 %rename("enemies") GetEnemies();
 %rename("player") GetPlayer();
 %bang Move(Direction direction);
+%bang Attack(Direction direction);
+%bang Wait();
 %bang Connect();
 %bang Disconnect();
 %include "src/bot/robot.hpp"
