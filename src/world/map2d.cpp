@@ -128,7 +128,11 @@ namespace World{
 		return y*width + x;
 	}
 
-  Position Map2D::IndexToPosition(int index) const{
+  int Map2D::IndexOf(Position p) const{
+    return Index(p.x, p.y);
+  }
+
+  Position Map2D::PositionOf(int index) const{
     return Position(index%width, index/width);
   }
 

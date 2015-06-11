@@ -23,7 +23,7 @@ Using the Map, you can locate the goal.
     the goal.
   Note:
     If you choose to iterate through the flat array of nodes,
-    use Map#index_to_position(index) to get the position.
+    use Map#position_of(index) to get the position.
 
 You can get the player position using Mob#position.
 
@@ -45,7 +45,7 @@ New Methods:
   Map#node(x,y)
   Map#node(position)
   Map#nodes
-  Map#index_to_position(index)
+  Map#position_of(index)
 
   Mob#position
 

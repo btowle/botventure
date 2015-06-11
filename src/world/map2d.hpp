@@ -45,7 +45,8 @@ public:
 	const Terrain& GetNode(int x, int y) const;
 
   int Index(int x, int y) const;
-  Position IndexToPosition(int index) const;
+  int IndexOf(Position p) const;
+  Position PositionOf(int index) const;
 
   bool IsInBounds(Position p) const;
 
