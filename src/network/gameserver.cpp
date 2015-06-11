@@ -14,6 +14,7 @@ GameServer::GameServer() :
 }
 
 void GameServer::Start(){
+  worldManager.InitWorld();
   server.start();
 }
 
@@ -34,6 +35,18 @@ GameServer& GameServer::LogLevel(int logLevel){
 GameServer& GameServer::TurnLimit(int turnLimit){
   ScopedLock lock(worldManagerMutex);
   worldManager.turnLimit = turnLimit;
+  return *this;
+}
+
+GameServer& GameServer::Campaign(const std::string campaignName){
+  ScopedLock lock(worldManagerMutex);
+  worldManager.campaignName = campaignName;
+  return *this;
+}
+
+GameServer& GameServer::Map(const std::string mapName){
+  ScopedLock lock(worldManagerMutex);
+  worldManager.mapName = mapName;
   return *this;
 }
 

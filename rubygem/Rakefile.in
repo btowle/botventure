@@ -9,7 +9,7 @@ spec =Gem::Specification.new do |s|
   s.author      = 'Brian Towle'
   s.homepage    = 'https://github.com/btowle/botventure'
   s.license     = 'MIT'
-  s.files       = Dir.glob("{lib,ext,data}/**/*.{cpp,hpp,cc,h,rb,map}") -
+  s.files       = Dir.glob("{lib,ext,data}/**/*.{cpp,hpp,cc,h,rb,map,README}") -
                   Dir.glob("tmp/**/*") -
                   Dir.glob("[Cc][Mm]ake{**/*,*}")
   s.extensions  = FileList['ext/**/extconf.rb']

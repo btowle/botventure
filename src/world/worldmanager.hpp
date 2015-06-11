@@ -14,13 +14,14 @@
 #endif //RAKE_COMPILATION
 
 #include <vector>
+#include <string>
 
 namespace Botventure{
 namespace World{
 
 class WorldManager{
 public:
-  WorldManager();
+  WorldManager(){}
   const Map2D& GetMap() const;
   const std::vector<Mob>& GetEnemies() const;
   const Mob& GetPlayer() const;
@@ -29,13 +30,19 @@ public:
   bool Attack(Messages::Direction direction);
   bool Attack(Mob& attacker, Messages::Direction direction);
   bool Attack(Mob& attacker, Position position);
+  bool Wait();
   Messages::GameState GetGameState(){ return gameState; }
 
   int GetTurn(){ return turnNumber; }
   void AdvanceTurn();
 
+  void InitWorld();
+
   int logLevel = 0;
   int turnLimit = -1;
+
+  std::string campaignName = ".";
+  std::string mapName = "default.map";
 
 private:
   bool MovePlayer(Position offset);
@@ -44,7 +51,6 @@ private:
   Position DirectionOffset(Messages::Direction direction);
   Position AdjacentPosition(Position position, Messages::Direction direction);
 
-  void InitWorld();
   void SimulateWorld();
 
   void OutputState();

@@ -64,7 +64,7 @@ bool Robot::Attack(Direction direction){
   return DoAction(Messages::ATTACK, direction);
 }
 bool Robot::Wait(){
-  return DoAction(Messages::ATTACK, Messages::NODIRECTION);
+  return DoAction(Messages::WAIT, Messages::NODIRECTION);
 }
 
 bool Robot::DoAction(Messages::ActionType actionType, Direction direction){

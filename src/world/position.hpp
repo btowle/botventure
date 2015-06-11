@@ -8,6 +8,11 @@ namespace World{
 
 class Position{
 public:
+  static const Position Up;
+  static const Position Right;
+  static const Position Down;
+  static const Position Left;
+
   Position(){}
   Position(int x, int y) : x(x), y(y) {}
 

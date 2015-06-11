@@ -16,12 +16,12 @@ namespace World{
 		}
 	}
 
-  void Map2D::Load(const std::string fileName){
+  void Map2D::Load(const std::string campaignName, const std::string fileName){
     std::string fullFileName;
-    if(Poco::File("../data/maps/" + fileName).exists()){
-      fullFileName = "../data/maps/" + fileName;
-    }else if(Poco::File("./data/maps/" + fileName).exists()){
-      fullFileName = "./data/maps/" + fileName;
+    if(Poco::File("../data/maps/" + campaignName + "/" + fileName).exists()){
+      fullFileName = "../data/maps/" + campaignName + "/" +  fileName;
+    }else if(Poco::File("./data/maps/" + campaignName + "/" +  fileName).exists()){
+      fullFileName = "./data/maps/" + campaignName + "/" +  fileName;
     }else{
       fullFileName = fileName;
     }

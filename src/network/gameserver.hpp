@@ -28,6 +28,8 @@ public:
 
   GameServer& LogLevel(int logLevel);
   GameServer& TurnLimit(int turnLimit);
+  GameServer& Campaign(const std::string campaignName);
+  GameServer& Map(const std::string mapName);
 private:
   Poco::Net::TCPServer server;
   World::WorldManager worldManager;

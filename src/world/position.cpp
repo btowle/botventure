@@ -3,6 +3,10 @@
 
 namespace Botventure{
 namespace World{
+  const Position Position::Up = Position(0,1);
+  const Position Position::Right = Position(1,0);
+  const Position Position::Down = Position(0,-1);
+  const Position Position::Left = Position(-1,0);
 
   bool Position::operator==(const Position& rhs) const{
     return (x == rhs.x) && (y == rhs.y);

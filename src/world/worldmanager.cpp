@@ -6,19 +6,6 @@
 namespace Botventure{
 namespace World{
 
-  WorldManager::WorldManager(){
-    try{
-      InitWorld();
-      if(logLevel > 2){
-        std::cout << "World Started" << std::endl;
-      }
-    }
-    catch(std::exception const& e)
-    {
-      std::cerr << "Exception:" << e.what() << std::endl;
-    }
-  }
-
   const Map2D& WorldManager::GetMap() const{
     if(logLevel > 1){
       std::cout << "Player looks around at the world" << std::endl;
@@ -125,6 +112,13 @@ namespace World{
     }
   }
 
+  bool WorldManager::Wait(){
+    if(logLevel > 1){
+      std::cout << player.name << " does nothing." << std::endl;
+    }
+    return true;
+  }
+
   Position WorldManager::DirectionOffset(Messages::Direction direction){
     static std::map<Messages::Direction, Position> map;
     if(map.empty()){
@@ -151,7 +145,8 @@ namespace World{
   }
 
   void WorldManager::InitWorld(){
-    map.Load("default.map");
+    map.Load(campaignName, mapName);
+
     for(Position p : map.enemySpawns){
       enemies.push_back(Mob()
                         .SetPosition(p)

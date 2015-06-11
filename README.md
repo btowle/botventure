@@ -53,6 +53,10 @@
 `#y`
 `#y=`
 `#to_s`
+`::Up`
+`::Right`
+`::Down`
+`::Left`
 
 ### Botventure Constants:
 ### Directions:

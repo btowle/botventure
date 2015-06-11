@@ -8,6 +8,25 @@ require 'fileutils'
 require 'optparse'
 require 'ostruct'
 
+def write_progress_file(campaign, level)
+  progress_file = File.new("./botventure_progress", "w")
+  progress_file.puts campaign
+  progress_file.puts level
+  progress_file.close
+end
+
+def update_readme
+  progress_file = File.open("./botventure_progress", "r")
+  campaign_name = progress_file.gets.chomp
+  readme_name = "#{progress_file.gets.chomp.rjust(3,'0')}.README"
+  file_name = "./data/maps/#{campaign_name}/#{readme_name}"
+  if File.exists? file_name then
+    FileUtils.cp(file_name, "./README")
+  else
+    File.open("./README", "w").puts "No README for this level."
+  end
+end
+
 options = {}
 OptionParser.new do |opts|
   options = OpenStruct.new
@@ -16,6 +35,8 @@ OptionParser.new do |opts|
   options.turn_limit = 1000
   options.turn_delay = -1
   options.init = false
+  options.campaign = "tutorial"
+  options.campaign_list = false
 
   opts.banner = "Usage: botventure [options]"
 
@@ -41,8 +62,13 @@ OptionParser.new do |opts|
     options.turn_delay = d;
   end
 
-  opts.on("-i", "--init", "Create a new player in current directory.") do |init|
-    options.init = init
+  opts.on("-i", "--init [CampaignName]", "Create a new player in current directory.") do |campaign|
+    options.init = true
+    options.campaign = campaign unless campaign == nil
+  end
+
+  opts.on("-c", "--campaigns", "Lists available campaigns.") do |list|
+    options.campaign_list = true
   end
 
   opts.on_tail("-h", "--help", "Show this message") do
@@ -51,27 +77,58 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+if options.campaign_list then
+  puts "Available campaigns:"
+  Dir.foreach("./data/maps"){ |name|
+    next if name == "." || name == ".."
+    puts name if File.directory? "./data/maps/#{name}"
+  }
+  puts "To Start a Campaign: botventure --init <CampaignName>"
+  exit
+end
+
 if options.init then
-  if File.file? "./player.rb" then
-    puts "player.rb already exists."
+  FileUtils.cp_r(File.dirname(__FILE__) + "/../data", ".")
+  if File.file?("./player.rb") == false then
+    FileUtils.cp("./data/bots/player.rb", "./player.rb")
+  end
+  if Dir.exists?("./data/maps/#{options.campaign}") == false then
+    puts "Campaign '#{options.campaign}' does not exist. Init failed."
     exit
   end
-  puts "Create new player..."
-  FileUtils.cp_r(File.dirname(__FILE__) + "/../data", ".")
-  FileUtils.cp("./data/bots/player.rb", "./player.rb")
-  puts "Edit player.rb and re-run to play!"
+  write_progress_file(options.campaign, "0")
+  update_readme
+  puts "Initialized. View 'README' for instructions."
+  exit
+end
+
+if !File.file? "./botventure_progress" then
+  puts "No botventure_progress found. Did you forget to 'botventure --init' ?"
+  exit
+end
+
+if !Dir.exists? "./data/maps/#{options.campaign}" then
+  puts "Campaign in botventure_progress does not exist"
   exit
 end
 
 if !File.file? options.bot_file then
-  puts "No player.rb found. Did you forget to init? ('botventure --init')"
+  puts "No player.rb found. Did you forget to 'botventure --init' ?"
   exit
 end
 require options.bot_file
 
+progress_file = File.open("./botventure_progress", "r")
+campaign_name = progress_file.gets.chomp
+map_number = progress_file.gets.chomp.to_i
+map_name = "#{map_number.to_s.rjust(3,'0')}.map"
+progress_file.close
+
 server = Botventure::GameServer.new
 server.log_level(options.log_level)
-      .turn_limit(options.turn_limit).start!
+      .turn_limit(options.turn_limit)
+      .campaign(campaign_name)
+      .map(map_name).start!
 
 player = Player.new
 
@@ -93,7 +150,16 @@ while bot.is_connected? && bot.is_playing? && !server.disconnected? do
 end
 
 if bot.is_winner? then
-  puts "You win!"
+  puts "You beat level #{map_number}!"
+  map_file = "./data/maps/#{campaign_name}/" +
+              "#{(map_number + 1).to_s.rjust(3,'0')}.map"
+  if File.file? map_file then
+    write_progress_file(campaign_name, map_number + 1)
+    update_readme
+    puts "README and progress updated for next level."
+  else
+    puts "You beat the the #{campaign_name} campaign!"
+  end
 else
   puts "You lose!"
 end

@@ -1,3 +1,6 @@
+%include std_string.i
+%include std_vector.i
+
 %module botventure
 %{
 #ifdef RAKE_COMPILATION
@@ -21,9 +24,6 @@ using namespace World;
 using namespace Bot;
 using namespace Messages;
 %}
-
-%include std_string.i
-%include std_vector.i
 
 namespace Botventure{
 namespace Messages{
@@ -53,15 +53,15 @@ enum NodeType{
 }
 
 namespace std {
-  %template(MobVector) vector<Mob>;
-  %template(TerrainVector) vector<NodeType>;
+  %template(MobVector) vector<Botventure::World::Mob>;
+  %template(TerrainVector) vector<Botventure::Messages::NodeType>;
 }
 
 %rename("to_s") ToString() const;
 %include "src/world/position.hpp"
 
 %predicate IsAlive() const;
-%predicate IsWalkable(Messages::NodeType t) const;
+%predicate IsWalkable(NodeType t) const;
 %include "src/world/mob.hpp"
 
 %rename("to_s") ToString() const;

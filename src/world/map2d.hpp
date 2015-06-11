@@ -24,7 +24,7 @@ public:
 	explicit Map2D(const Messages::Map& msg);
 	~Map2D(){}
 
-  void Load(std::string const fileName);
+  void Load(const std::string campaignName, const std::string fileName);
   std::string ToString() const;
   std::string ToString(const std::vector<Mob>& enemies, const Mob& player) const;
 
